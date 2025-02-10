@@ -1,3 +1,78 @@
+\usepackage{amsmath}
+\usepackage{amssymb}
+
 \documentclass[11pt]{book}
+
+\begin{document}
+
 \title{Robotics}
 \author{Stewart Nash}
+
+\maketitle
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{Dynamics}
+
+\chapter{Controls}
+
+\section{State Variable Representation}
+
+Powerful tools from matrix algebra can be used to solve sets of first-order differential equations. That is why it is sometimes helpful to transform a system described by \emph{n}th-order differential equations into a system of first-order differential equations.
+
+\subsection{Systems Modeled by Linear Differential Equations}
+
+Consider a system represented by a \emph{n}th-order, single-input linear constant coefficient differential equation
+\begin{equation}
+	\sum{i=0}^n{a_i\frac{d^iy}{dt^i}}=u
+\end{equation}
+This equation can be replaced by \emph{n} first-order differential equations
+\begin{equation}
+	\left\{
+		\begin{aligned}
+			\frac{dx_k}{dt}&=x_{k+1},\,1<k<n\\
+			\frac{dx_n}{dt}&==\frac{1}{a_n}\left[\sum_{k=0}^{n-1}{a_kx_{k+1}}\right]+\frac{1}{a_n}u
+		\end{aligned}
+	\right.
+\end{equation}
+where $x_1\def{y}$ and $i,k\in\mathbb{W}$. This can be written as a matrix equation
+\begin{equation}
+	\begin{bmatrix}
+		\frac{dx_1}{dt}\\
+		\frac{dx_2}{dt}\\
+		\vdots\\
+		\frac{dx_n}{dt}
+	\end{bmatrix}
+	\begin{bmatrix}
+		0&1&0&\dots&0\\
+		0&0&1&\dots&0
+	\end{bmatrix}
+	\begin{bmatrix}
+		x_1\\
+		x_2\\
+		\vdots\\
+		\x_n
+	\end{bmatrix}+
+	\begin{bmatrix}
+		0\\
+		0\\
+		\vdots\\
+		0\\
+		\frac{1}{a_n}
+	\end{bmatrix}u
+\end{equation}
+or
+\begin{equation}
+	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+\mathbf{b}u
+\end{equation}
+
+\subsection{Systems Modeled by Constant Coefficient Linear Difference Equations}
+
+\chapter{Image Processing}
+
+\backmatter
+
+\end{document}
+
