@@ -46,14 +46,16 @@ where $x_1\def{y}$ and $i,k\in\mathbb{W}$. This can be written as a matrix equat
 		\frac{dx_n}{dt}
 	\end{bmatrix}
 	\begin{bmatrix}
-		0&1&0&\dots&0\\
-		0&0&1&\dots&0
+		0&1&0&\cdots&0\\
+		0&0&1&\cdots&0\\
+		\vdots&\vdots&\vdots&\ddots&\vdots\\
+		-\frac{a_0}{a_n}&-\frac{a_1}{a_n}&-\frac{a_2}{a_n}&\cdots&-\frac{a_{n-1}}{a_n}
 	\end{bmatrix}
 	\begin{bmatrix}
 		x_1\\
 		x_2\\
 		\vdots\\
-		\x_n
+		x_n
 	\end{bmatrix}+
 	\begin{bmatrix}
 		0\\
@@ -67,8 +69,58 @@ or
 \begin{equation}
 	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+\mathbf{b}u
 \end{equation}
+A multi-input-multi-output (MIMO) system can be represented by
+\begin{equation}
+	\begin{bmatrix}
+		\frac{dx_1}{dt}\\
+		\frac{dx_2}{dt}\\
+		\vdots\\
+		\frac{dx_n}{dt}
+	\end{bmatrix}
+	\begin{bmatrix}
+		a_{11}&a_{12}&\cdots&a_{1n}\\
+		a_{21}&a_{22}&\cdots&a_{2n}\\
+		\vdots&\vdots&\ddots&\vdots\\
+		a_{n1}&a_{n2}&\cdots&a_{nn}
+	\end{bmatrix}
+	\begin{bmatrix}
+		x_1\\
+		x_2\\
+		\vdots\\
+		x_n
+	\end{bmatrix}+
+	\begin{bmatrix}
+		b_{11}&b_{12}&\cdots&b_{1r}\\
+		b_{21}&b_{22}&\cdots&b_{2r}\\
+		\vdots&\vdots&\ddots&\vdots\\
+		b_{n1}&b_{n2}&\cdots&b_{nr}
+	\end{bmatrix}
+	\begin{bmatrix}
+		u_1\\
+		u_2\\
+		\vdots\\
+		u_r
+	\end{bmatrix}
+\end{equation}
+or
+\begin{equation}
+	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+B\mathbf{u}
+\end{equation}
+where $\mathbf{u}$ is an \emph{r}-vector of input functions.
+Let $\mathbf{\Phi}$ be the $n\times{n}$ \emph{transition matrix} of the differential equation given above which is described by the matrix equation
+\begin{equation}
+	\frac{d\mathbf{\Phi}}{dt}=A\mathbf{\Phi}
+\end{equation}
 
 \subsection{Systems Modeled by Constant Coefficient Linear Difference Equations}
+
+\section{Signal Flow Graphs}
+
+\section{Nyquist Analysis and Design}
+
+\section{Root Locus Analysis and Design}
+
+\section{Bode Analysis and Design}
 
 \chapter{Image Processing}
 

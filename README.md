@@ -9,6 +9,10 @@ Select kinematic and dynamic topics are covered.
 Select topics in controls are covered.
 ### State Variable Representation
 State variable representations of systems described by both linear differential equations and linear difference equations are covered.
+### Signal Flow Graphs
+### Nyquist Analysis and Design
+### Root Locus Analysis and Design
+### Bode Analysis and Design
 ## Image Processing
 Select topics in image processing and computer vision are covered.
 
