@@ -5,6 +5,10 @@ This repository contains helpful code snippets and a manual on select introducto
 The manual is given in LaTeX format and must be compiled. (A compiled PDF may be included in the future.)
 ## Dynamics
 Select kinematic and dynamic topics are covered.
+### Kinematics
+### Differential Motions
+### Dynamics Analysis
+### Trajectory Planning
 ## Controls
 Select topics in controls are covered.
 ### State Variable Representation

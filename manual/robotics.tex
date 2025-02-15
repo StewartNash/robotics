@@ -1,7 +1,8 @@
+\documentclass[11pt]{book}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
-
-\documentclass[11pt]{book}
+\usepackage{mathtools}
 
 \begin{document}
 
@@ -16,6 +17,65 @@
 
 \chapter{Dynamics}
 
+\section{Kinematics}
+Take a vector with components $\mathbf{P}=(a_x,b_y,c_z)$. A scale factor $w$ can be added (to the matrix form) to give
+\begin{equation}
+	\mathbf{P}=
+	\begin{bmatrix}
+		P_x\\
+		P_y\\
+		P_z\\
+		w
+	\end{bmatrix}
+\end{equation}
+where $(a_x,b_y,c_z)=(P_x/w,P_y/w,P_z/w)$. A direction vector can be represented by a scale factor of zero ($w=0$).
+
+A universe reference frame is represented by $F_{x,y,z}$ and a moving frame is represented by $F_{n,o,a}$ where the letters n, o, and a come from the words normal, orientation and approach. Relative to the gripper, the $z$-axis is the approach axis by which the gripper approaches an object. The orientation with which the gripper frame approaches the part is the orientation axis. The normal-axis or x-axis is normal to both. A fourth vector which gives the location of a frame relative to a reference frame can be added to the vectors representing the components of the $n$-, $o$-, and $a$-axes to give a homogeneous matrix representation of this relative frame
+\begin{equation}
+	F=
+	\begin{bmatrix}
+		1&0&0&d_x\\
+		0&1&0&d_y\\
+		0&0&1&d_z\\
+		0&0&0&1
+	\end{bmatrix}
+\end{equation}
+Pre-multiplying the frame matrix by the transformation matrix will yield the new location of the frame.
+
+Rotation matrices about the $x$-, $y$- and $z$-axes are given by
+\begin{equation}
+	\begin{aligned}
+		\mathrm{rot}(x,\theta)&=
+		\begin{bmatrix}
+			1&0&0\\
+			0&\cos{\theta}&\sin{\theta}\\
+			0&\sin{\theta}&\cos{\theta}
+		\end{bmatrix}\\
+		\mathrm{rot}(y,\theta)&=
+		\begin{bmatrix}
+			\cos{\theta}&0&\sin{\theta}\\
+			0&1&0\\
+			-\sin{\theta}&0&\cos{\theta}
+		\end{bmatrix}\\
+		\mathrm{rot}(z,\theta)&=
+		\begin{bmatrix}
+			\cos{\theta}&-\sin{\theta}&0\\
+			\sin{\theta}&\cos{\theta}&0\\
+			0&0&1
+		\end{bmatrix}
+	\end{aligned}
+\end{equation}
+Denoting the transformation of frame $R$ relative to frame $U$ (universe) as $\prescript{U}{}T_R$, denoting the $p$ relative to the frame $R$ as $\prescript{R}{}p=p_{noa}$, and denoting $p$ relative to frame $U$ as $\prescript{U}{}p=p_{xyz}$ we have
+\begin{equation}
+	\prescript{U}{}p=\prescript{U}{}T_R\times\prescript{R}{}p
+\end{equation}
+
+\section{Differential Motion}
+
+\section{Dynamic Analysis}
+
+\section{Trajectory Planning}
+
 \chapter{Controls}
 
 \section{State Variable Representation}
@@ -26,18 +86,18 @@ Powerful tools from matrix algebra can be used to solve sets of first-order diff
 
 Consider a system represented by a \emph{n}th-order, single-input linear constant coefficient differential equation
 \begin{equation}
-	\sum{i=0}^n{a_i\frac{d^iy}{dt^i}}=u
+	\sum_{i=0}^n{a_i\frac{d^iy}{dt^i}}=u
 \end{equation}
 This equation can be replaced by \emph{n} first-order differential equations
 \begin{equation}
 	\left\{
 		\begin{aligned}
 			\frac{dx_k}{dt}&=x_{k+1},\,1<k<n\\
-			\frac{dx_n}{dt}&==\frac{1}{a_n}\left[\sum_{k=0}^{n-1}{a_kx_{k+1}}\right]+\frac{1}{a_n}u
+			\frac{dx_n}{dt}&=\frac{1}{a_n}\left[\sum_{k=0}^{n-1}{a_kx_{k+1}}\right]+\frac{1}{a_n}u
 		\end{aligned}
 	\right.
 \end{equation}
-where $x_1\def{y}$ and $i,k\in\mathbb{W}$. This can be written as a matrix equation
+where $x_1\equiv{y}$ and $i,k\in\mathbb{W}$. This can be written as a matrix equation
 \begin{equation}
 	\begin{bmatrix}
 		\frac{dx_1}{dt}\\
@@ -106,7 +166,7 @@ or
 \begin{equation}
 	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+B\mathbf{u}
 \end{equation}
-where $\mathbf{u}$ is an \emph{r}-vector of input functions.
+where $\mathbf{u}$ is an \emph{r}-vector of input functions.\\
 Let $\mathbf{\Phi}$ be the $n\times{n}$ \emph{transition matrix} of the differential equation given above which is described by the matrix equation
 \begin{equation}
 	\frac{d\mathbf{\Phi}}{dt}=A\mathbf{\Phi}
