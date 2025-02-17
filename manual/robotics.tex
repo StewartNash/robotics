@@ -164,15 +164,28 @@ A multi-input-multi-output (MIMO) system can be represented by
 \end{equation}
 or
 \begin{equation}
-	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+B\mathbf{u}
+	\frac{d\mathbf{x}}{dt}=A\mathbf{x}+B\mathbf{u}\label{eq:3_25}
 \end{equation}
 where $\mathbf{u}$ is an \emph{r}-vector of input functions.\\
 Let $\mathbf{\Phi}$ be the $n\times{n}$ \emph{transition matrix} of the differential equation given above which is described by the matrix equation
 \begin{equation}
 	\frac{d\mathbf{\Phi}}{dt}=A\mathbf{\Phi}
 \end{equation}
+If $\mathbf{\Phi}(0)=I$ (initial condition) then $\mathbf{\Phi}(t)=e^{At}$ where
+\begin{equation}
+	e^{At}=\sum_{n=0}^\infty{\frac{A^nt^n}{n!}}
+\end{equation}
+The solution to \eqref{eq:3_25} on the interval $0\leq{t}<\infty$ is given by
+\begin{equation}
+	\mathbf{x}(t)=e^{At}\mathbf{x}(0)+\int_0^t{e^{A(t-\tau)}B\mathbf{u}(\tau)\,d\tau}
+\end{equation}
 
 \subsection{Systems Modeled by Constant Coefficient Linear Difference Equations}
+
+An $n$-th order (linear constant-coefficient) difference equation is given by
+\begin{equation}
+	\sum_{i=0}^n{a_iy(k+i)}=\sum_{i=0}^m{b_iu(k+i)}
+\end{equation}
 
 \section{Signal Flow Graphs}
 
@@ -181,6 +194,20 @@ Let $\mathbf{\Phi}$ be the $n\times{n}$ \emph{transition matrix} of the differen
 \section{Root Locus Analysis and Design}
 
 \section{Bode Analysis and Design}
+
+\section{Miscellaneous Topics}
+
+\subsection{Non-linear Control Systems}
+
+\subsection{Controllability and Observability}
+
+\subsection{State Feedback}
+
+\subsection{Random Inputs}
+
+\subsection{Optimal Control Systems}
+
+\subsection{Adaptive Control Systems}
 
 \chapter{Image Processing}
 

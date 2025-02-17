@@ -17,6 +17,13 @@ State variable representations of systems described by both linear differential 
 ### Nyquist Analysis and Design
 ### Root Locus Analysis and Design
 ### Bode Analysis and Design
+### Miscellaneous Topics
+#### Nonlinear Control Systems
+#### Controllability and Observability
+#### State Feedback
+#### Random Inputs
+#### Optimal Control Systems
+#### Adaptive Control Systems
 ## Image Processing
 Select topics in image processing and computer vision are covered.
 
