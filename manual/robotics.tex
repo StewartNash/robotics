@@ -74,6 +74,50 @@ Denoting the transformation of frame $R$ relative to frame $U$ (universe) as $\p
 
 \section{Dynamic Analysis}
 
+The Lagrangian is given by $L=K-P$ where $K$ and $P$ are the kinetic and potential energy of a system, respectively. If $F_i$ is the summation of all external forces for a linear motion and $T_i$ is the summation of all external forces for a linear motion and $T_i$ is the summation of all external torques for a rotational motion, then
+\begin{equation}
+	\begin{aligned}
+		F_i&=\frac{\partial}{\partial{t}}\left(\frac{\partial{L}}{\partial\dot{x}_i}\right)-\frac{\partial{L}}{\partial{x_i}}\\
+		T_i&=\frac{\partial}{\partial{t}}\left(\frac{\partial{L}}{\partial\dot{\theta}_i}\right)-\frac{\partial{L}}{\partial\theta_i}
+	\end{aligned}
+\end{equation}
+The equation of motion for a 2-DOF system is given by
+\begin{equation}
+	\begin{bmatrix}
+		T_i\\
+		T_j
+	\end{bmatrix}=
+	\begin{bmatrix}
+		D_{ii}&D_{ij}\\
+		D_{ji}&D_{jj}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\ddot{\theta}_i\\
+		\ddot{\theta}_j
+	\end{bmatrix}+
+	\begin{bmatrix}
+		D_{iii}&D_{ijj}\\
+		D_{jii}&D_{jjj}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\dot{\theta}_i\\
+		\dot{\theta}_j
+	\end{bmatrix}+
+	\begin{bmatrix}
+		D_{iij}&D_{iji}\\
+		D_{jij}&D_{jji}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\dot{\theta}_i\dot{\theta}_j\\
+		\dot{\theta}_j\dot{\theta}_i
+	\end{bmatrix}+
+	\begin{bmatrix}
+		D_i\\
+		D_j
+	\end{bmatrix}
+\end{equation}
+Where the coefficient $D_{ii}$ is the effective inertia at joint $i$, such that an acceleration at joint $i$ causes a torque at joint $i$ equal to $D_{ii}\ddot{\theta}_i$, and the coefficient $D_{ij}$ is the coupling inertia between joints $i$ and $j$ such that an acceleration at joint $i$ or $j$ causes a torque at joint $j$ or $i$ equal to $D_{ij}\ddot{\theta}_j$ or $D_{ji}\ddot{\theta}_i$. $D_{ijj}\dot{\theta}_j^2$ terms represent centripetal forces acting at joint $i$ due to a velocity at joint $j$. All terms with $\dot{\theta}_i\dot{\theta}_j$ represent Coriolis accelerations and, when multiplied by corresponding inertias, represent Coriolis forces. $D_i$ represents gravity forces at joint $i$.
+
 \section{Trajectory Planning}
 
 \chapter{Controls}
@@ -185,6 +229,22 @@ The solution to \eqref{eq:3_25} on the interval $0\leq{t}<\infty$ is given by
 An $n$-th order (linear constant-coefficient) difference equation is given by
 \begin{equation}
 	\sum_{i=0}^n{a_iy(k+i)}=\sum_{i=0}^m{b_iu(k+i)}
+\end{equation}
+Define a shift operator by the equation
+\begin{equation}
+	Z[y(k)]\equiv{y(k+1)}
+\end{equation}
+The $n$-th order linear constant-coefficient difference equation
+\begin{equation}
+	y(k+n)+\sum_{i=0}^{n-1}{a_iy(k+i)}=u(k)
+\end{equation}
+can be written as
+\begin{equation}
+	(Z^n+\sum_{i=0}^{n-1}{a_iZ^i})[y(k)]=u(k)
+\end{equation}
+The characteristic equation of this difference equation is
+\begin{equation}
+	Z^n+\sum_{i=0}^{n-1}{a_iZ^i}=0
 \end{equation}
 
 \section{Signal Flow Graphs}
