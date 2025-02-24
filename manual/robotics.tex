@@ -249,6 +249,38 @@ The characteristic equation of this difference equation is
 
 \section{Signal Flow Graphs}
 
+\section{Sensitivity and Error}
+
+\subsection{Sensitivity}
+
+Sensitivity can be given for either the transfer or the frequency response function. The sensitivity of a system to its parameters is a measure of how much either of these system functions differ from its nominal when each of its parameters differs from its nominal value. Sensitivity can also be given for systems expressed in the time domain.
+
+For a mathematical model $T(k)$ with $k$ regarded as the only parameter, the sensitivity of $T(k)$ with respect to the parameter $k$ is defined by
+\begin{equation}
+	S_k^{T(k)}\equiv\frac{d\,\ln{T(k)}}{d\,\ln{k}}=\frac{dT(k)}{dk}\frac{k}{T(k)}
+\end{equation}
+
+\subsection{Error}
+
+For the canonical feedback system, the open-loop transfer function is given by
+\begin{equation}
+	GH=\frac{Ks^a\prod_{i=1}^{m-a}{(s+z_i)}}{s^b\prod_{i=1}^{n-b}{s+p_i}}
+\end{equation}
+We only consider the case where $b\geq{a}$ and $l\equiv{b-a}$.
+
+A canonical system whose open-loop transfer function can be written in the form
+\begin{equation}
+	GH=\frac{K\prod_{i=1}^{m-a}{(s+z_i)}}{s^l\prod_{i=1}^{n-a-l}{s+p_i}}\equiv\frac{KB_1(s)}{s^lB_2(s)}
+\end{equation}
+where $l\geq{0}$ and $-z_i$ and $-p_i$ are the nonzero finite zeros and poles of $GH$, respectively, is called a type $l$ system.
+
+Three criteria of the effectiveness (of feedback) in a stable type $l$ unity feedback system are
+\begin{itemize}
+	\item position (step) error constant
+	\item velocity (ramp) error constant
+	\item acceleration (parabolic) error constant
+\end{itemize}
+
 \section{Nyquist Analysis and Design}
 
 \subsection{Mapping}
