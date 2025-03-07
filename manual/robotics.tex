@@ -5,6 +5,7 @@
 \usepackage{mathtools}
 
 \newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[section]
 
 \begin{document}
 
@@ -20,6 +21,7 @@
 \chapter{Dynamics}
 
 \section{Kinematics}
+
 Take a vector with components $\mathbf{P}=(a_x,b_y,c_z)$. A scale factor $w$ can be added (to the matrix form) to give
 \begin{equation}
 	\mathbf{P}=
@@ -251,7 +253,13 @@ The characteristic equation of this difference equation is
 
 \section{Signal Flow Graphs}
 
-\section{Sensitivity and Error}
+\section{Stability, Sensitivity and Error}
+
+\subsection{Stability}
+
+\begin{definition} A continuous system \emph{stable} if its impulse response $y_\delta(t)$ approaches zero as time approaches infinity. Similarly, a discrete-time system is stable if its Kronecker delta response $y_\delta(k)$ approaches zero as time approaches infinity.\end{definition}
+
+A continuous or discrete-time system can also be defined as stable if every bounded input results in a bounded output.
 
 \subsection{Sensitivity}
 
@@ -281,6 +289,31 @@ Three criteria of the effectiveness (of feedback) in a stable type $l$ unity fee
 	\item position (step) error constant
 	\item velocity (ramp) error constant
 	\item acceleration (parabolic) error constant
+\end{itemize}
+
+\subsection{Specifications}
+
+We define an open-loop frequency response function $GH(\omega)$. For continuous systems $GH(\omega)\equiv{GH(j\omega)}$ and for discrete-time systems $GH(\omega)\equiv{GH(e^{j\omega{T}})}$. There are seven frequency-domain specifications which we will cover:
+\begin{itemize}
+	\item Phase crossover frequency, $\omega_\pi$
+	\item Gain margin
+	\item Gain crossover frequency, $\omega_\mathrm{1}$
+	\item Phase margin, $\phi_\mathrm{PM}$
+	\item Delay time, $T_d$
+	\item Cutoff frequency, $\omega_c$ or $f_c$
+	\item Bandwidth, BW
+	\item Cutoff rate
+	\item Resonance peak, $M_p$
+	\item Resonant frequency, $\omega_p$
+\end{itemize}
+
+When using time-domain specifications, we define them in terms of responses to either unit step, ramp or parabolic inputs. We look at both steady state and transient responses. Steady state performance specifications include $K_p$, $K_v$ and $K_a$. The transient response performance specifications which we will cover are as follows:
+\begin{itemize}
+	\item Overshoot
+	\item Delay time, $T_d$
+	\item Rise time, $T_r$
+	\item Settling time, $T_s$
+	\item Dominant time constant, $\tau$
 \end{itemize}
 
 \section{Nyquist Analysis and Design}
