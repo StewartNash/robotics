@@ -78,49 +78,63 @@ Denoting the transformation of frame $R$ relative to frame $U$ (universe) as $\p
 
 \section{Dynamic Analysis}
 
-The Lagrangian is given by $L=K-P$ where $K$ and $P$ are the kinetic and potential energy of a system, respectively. If $F_i$ is the summation of all external forces for a linear motion and $T_i$ is the summation of all external forces for a linear motion and $T_i$ is the summation of all external torques for a rotational motion, then
+The Lagrangian is given by $L=T-V$ where $T$ and $V$ are the kinetic and potential energy of a system, respectively. If $F_i$ is the summation of all external forces acting on the $i$th generalized coordinate $q_i$, the equations of motion are given by
+\begin{equation}
+	F_i=\frac{d}{dt}\left(\frac{\partial{L}}{\partial\dot{q}_i}\right)-\frac{\partial{L}}{\partial{q_i}}
+\end{equation}
+When this is solved, the resulting equations of manipulator dynamics can be written
+\begin{equation}
+	M(q)\ddot{q}+V(q,\dot{q})+G(q)=\tau
+\end{equation}
+or, alternatively,
+\begin{equation}
+	M(q)\ddot{q}+C(q,\dot{q})\dot{q}+N(q,\dot{q})=\tau
+\end{equation}
+where $M(q)$ is the inertia matrix, $V(q,\dot{q})$ is the Coriolis and centripetal acceleration vector, $C(q,\dot{q})$ is the Coriolis matrix, $G(q)$ is the gravity vector, $N(q,\dot{q})$ represents gravity and other non-linear terms and $\tau$ is the $n$-vector of generalized forces which could be, for example, the actuator torques.
+
+To be concrete, we can give an example of this in which we have two coordinates, $x$ and $\theta$, for the $i$th of $n$ linkages. If $F_i$ is the summation of all external forces for a linear motion and $T_i$ is the summation of all external torques for a rotational motion, then
 \begin{equation}
 	\begin{aligned}
-		F_i&=\frac{\partial}{\partial{t}}\left(\frac{\partial{L}}{\partial\dot{x}_i}\right)-\frac{\partial{L}}{\partial{x_i}}\\
-		T_i&=\frac{\partial}{\partial{t}}\left(\frac{\partial{L}}{\partial\dot{\theta}_i}\right)-\frac{\partial{L}}{\partial\theta_i}
+		F_i&=\frac{d}{dt}\left(\frac{\partial{L}}{\partial\dot{x}_i}\right)-\frac{\partial{L}}{\partial{x_i}}\\
+		T_i&=\frac{d}{dt}\left(\frac{\partial{L}}{\partial\dot{\theta}_i}\right)-\frac{\partial{L}}{\partial\theta_i}
 	\end{aligned}
 \end{equation}
-The equation of motion for a 2-DOF system is given by
+We can simplify the equations of motion for a 2-DOF system which is given by
 \begin{equation}
 	\begin{bmatrix}
-		T_i\\
-		T_j
+		\tau_i\\
+		\tau_j
 	\end{bmatrix}=
 	\begin{bmatrix}
-		D_{ii}&D_{ij}\\
-		D_{ji}&D_{jj}
+		M_{ii}&M_{ij}\\
+		M_{ji}&M_{jj}
 	\end{bmatrix}
 	\begin{bmatrix}
 		\ddot{\theta}_i\\
 		\ddot{\theta}_j
 	\end{bmatrix}+
 	\begin{bmatrix}
-		D_{iii}&D_{ijj}\\
-		D_{jii}&D_{jjj}
+		C_{iii}&C_{ijj}\\
+		C_{jii}&C_{jjj}
 	\end{bmatrix}
 	\begin{bmatrix}
 		\dot{\theta}_i\\
 		\dot{\theta}_j
 	\end{bmatrix}+
 	\begin{bmatrix}
-		D_{iij}&D_{iji}\\
-		D_{jij}&D_{jji}
+		C_{iij}&C_{iji}\\
+		C_{jij}&C_{jji}
 	\end{bmatrix}
 	\begin{bmatrix}
 		\dot{\theta}_i\dot{\theta}_j\\
 		\dot{\theta}_j\dot{\theta}_i
 	\end{bmatrix}+
 	\begin{bmatrix}
-		D_i\\
-		D_j
+		G_i\\
+		G_j
 	\end{bmatrix}
 \end{equation}
-Where the coefficient $D_{ii}$ is the effective inertia at joint $i$, such that an acceleration at joint $i$ causes a torque at joint $i$ equal to $D_{ii}\ddot{\theta}_i$, and the coefficient $D_{ij}$ is the coupling inertia between joints $i$ and $j$ such that an acceleration at joint $i$ or $j$ causes a torque at joint $j$ or $i$ equal to $D_{ij}\ddot{\theta}_j$ or $D_{ji}\ddot{\theta}_i$. $D_{ijj}\dot{\theta}_j^2$ terms represent centripetal forces acting at joint $i$ due to a velocity at joint $j$. All terms with $\dot{\theta}_i\dot{\theta}_j$ represent Coriolis accelerations and, when multiplied by corresponding inertias, represent Coriolis forces. $D_i$ represents gravity forces at joint $i$.
+Where the coefficient $M_{ii}$ is the effective inertia at joint $i$, such that an acceleration at joint $i$ causes a torque at joint $i$ equal to $M_{ii}\ddot{\theta}_i$, and the coefficient $M_{ij}$ is the coupling inertia between joints $i$ and $j$ such that an acceleration at joint $i$ or $j$ causes a torque at joint $j$ or $i$ equal to $M_{ij}\ddot{\theta}_j$ or $M_{ji}\ddot{\theta}_i$. $C_{ijj}\dot{\theta}_j^2$ terms represent centripetal forces acting at joint $i$ due to a velocity at joint $j$. All terms with $\dot{\theta}_i\dot{\theta}_j$ represent Coriolis accelerations and, when multiplied by corresponding inertias, represent Coriolis forces. $G_i$ represents gravity forces at joint $i$.
 
 \section{Trajectory Planning}
 
