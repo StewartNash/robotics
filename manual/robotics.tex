@@ -74,6 +74,32 @@ Denoting the transformation of frame $R$ relative to frame $U$ (universe) as $\p
 	\prescript{U}{}p=\prescript{U}{}T_R\times\prescript{R}{}p
 \end{equation}
 
+\subsection{Twists and Screws}
+
+The special orthogonal group is denoted $SO$ and we may define it as the space of rotation matrices in $\mathbb{R}^{n{\times}n}$ by
+\begin{equation}
+	SO(n)=\{R\in\mathbb{R}^{n{\times}n}:RR^T=I,\mathrm{det}\,R=+1\}
+\end{equation}
+The space of $n{\times}n$ skew-symmetric matrices is given by
+\begin{equation}
+	so(n)=\{S\in\mathbb{R}^{n{\times}n}:S^T=-S\}
+\end{equation}
+The special Euclidean group, generalized to $n$ dimensions, is given by
+\begin{equation}
+	SE(n)\equiv\mathbb{R}^n\times{SO(n)}
+\end{equation}
+In other words, the special Euclidean group is comprised of a configuration pair $(p, R)$ which is the product space of $\mathbb{R}^n$ with $SO(n)$ and is given in 3 dimensions by
+\begin{equation}
+	SE(3)=\{(p,R):p\in\mathbb{R}^3,R\in{SO(3)}\}=\mathbb{R}^3\times{SO(3)}
+\end{equation}
+We can define $se(n)$ as being comprised of the configuration pair $(v, \omega)$ where $v$ is an element of $\mathbb{R}^n$ and $\omega$ is a skew-symmetric matrix from $so(n)$. In three dimensions we have
+\begin{equation}
+	se(3)\equiv\{(v,\hat{\omega}):v\in\mathbb{R}^3,\hat{\omega}\in{so(3)}\}
+\end{equation}
+A \emph{twist} is an element of $se(3)$, $\hat{\xi}\in{se(3)}$. The twist coordinates of $\hat{\xi}$ are given by $\xi\equiv(v,\omega)$.
+
+A rigid body motion which consists of rotation about an axis in space through an angle of $\theta$ radians, followed by a translation along the same axis by and amount $d$ is referred to as a screw motion. A \emph{screw} is composed of an axis $l$, a pitch $h$, and a magnitude $M$.
+
 \section{Differential Motion}
 
 \section{Dynamic Analysis}
