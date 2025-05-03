@@ -9,7 +9,7 @@
 
 \begin{document}
 
-\title{Robotics}
+\title{Phoenix Dynamics Robotics Manual}
 \author{Stewart Nash}
 
 \maketitle
@@ -399,6 +399,38 @@ control.nyquist(GH, omega_limits=(0.01, 100), omega_num=1000)
 plt.show()
 \end{verbatim}
 
+\end{example}
+
+\begin{example}
+	The general transfer function of a continuous sytem lead compensator is
+	\begin{equation}
+		P_\mathrm{Lead}(s)=\frac{s+a}{s+b}\quad{b>a}
+	\end{equation}
+	This compensator has a zero at $s=-a$ and a pole at $s=-b$. The general transfer function of a continuous system lag compensator is
+	\begin{equation}
+		P_\mathrm{Lag}(s)=\frac{a(s+b)}{b(s+a)}\quad{b>a}
+	\end{equation}
+	However, in this case the zero is at $s=-b$ and the pole is at $s=-a$. The gain factor $a/b$ is included because of the way it is usually mechanized. The general transfer function of a continuous system lag-lead compensator is
+	\begin{equation}
+		P_\mathrm{LL}(s)=\frac{(s+a_1)(s+b_2)}{(s+b_1)(s+a_2)}\quad{b_1>a_1,b_2>a_2}
+	\end{equation}
+	This compensator has two zeros and two poles. For mechanization considerations, the restriction $a_1b_2=b_1a_2$ is usually imposed.
+\end{example}
+
+\begin{example}
+	A proportional (P) controller has an output $u$ proportional to its input $e$, that is, $u=K_pe$, where $K_p$ is the proportionality constant. A derivative (D) controller has an output proportional to the derivative of its input $e$, that is, $u=K_Dde/dt$, where $K_D$ is a proportionality constant. An integral (I) controller has an output $u$ proportional to the integral of its input $e$, that is, $u=K_I\int{e(t)\,dt}$, where $K_I$ is a proportionality constant.  PD, PI, DI, and PID controllers are combinations of proportional (P), derivate (D), and integral (I) controllers. For example, the output $u$ of a PD controller has the form
+	\begin{equation}
+		u_{PD}=K_Pe+K_D\frac{de}{dt}
+	\end{equation}
+and the output of a PID controller has the form
+	\begin{equation}
+		u_{PD}=K_Pe+K_D\frac{de}{dt}+K_I\int{e(t)\,dt}
+	\end{equation}
+	The transfer function of this PID controller is
+	\begin{equation}
+		P_\mathrm{PID}(s)\equiv\frac{U_\mathrm{PID}(s)}{E(s)}=K_P+K_Ds+\frac{K_I}{s}=\frac{K_Ds^2+K_Ps+K_I}{s}
+	\end{equation}
+	This controller has two zeros and one pole. It is similar to the lag-lead compensator of the previous example except that the smallest pole is at the origin (an integrator) and it does nto have the second pole. It is typically mechanized in an analog or digital computer. 
 \end{example}
 
 \section{Root Locus Analysis and Design}
