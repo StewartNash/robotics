@@ -2,8 +2,19 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{mathtools}
 
+\newtheoremstyle{example} % Style name
+	{10pt} % Space above
+	{10pt} % Space below
+	{\normalfont} % Body font
+	{} % Header font
+	{\bfseries} % Header font
+	{.} % Separator
+	{10pt} % Space after header
+	{} % Header text
+\theoremstyle{example}
 \newtheorem{example}{Example}[section]
 \newtheorem{definition}{Definition}[section]
 
@@ -418,6 +429,25 @@ plt.show()
 \end{example}
 
 \begin{example}
+	The general transfer function of a digital lead compensator is
+	\begin{equation}
+		P_\mathrm{Lead}(z)=\frac{K_\mathrm{Lead}(z-z_c)}{z-p_c}\quad{z_c>p_c}
+	\end{equation}
+	This compensator has a zero at $z=z_c$ and a pole at $z=p_c$. Its steady state gain is
+	\begin{equation}
+		P_\mathrm{Lead}(1)=\frac{K_\mathrm{Lead}(1-z_c)}{1-p_c}
+	\end{equation}
+	The gain factor $K_\mathrm{Lead}$ is included in the transfer function to adjust its gain at a given $\omega$ to a desired value. The general transfer fucntion of a digital lag compensator is
+	\begin{equation}
+		P_\mathrm{Lag}(z)=\frac{(1-p_c)(z-z_c)}{(1-z_c)(z-p_c)}\quad{z_c<p_c}
+	\end{equation}
+	This compensator has a zero at $z=z_c$ and a pole at $z=p_c$. The gain factor $(1-p_c)/(1-z_c)$ is included so that the low frequency or steady state gain $P_\mathrm{Lag}(1)=1$, analogous to the continuous-time lag compensator.
+
+	Digital lag and lead compensators can be designed directly from $s$-domain specifications by using the transform between the $s$-domain and the $z$-domain defined by $z=e^{sT}$.
+\end{example}
+
+
+\begin{example}
 	A proportional (P) controller has an output $u$ proportional to its input $e$, that is, $u=K_pe$, where $K_p$ is the proportionality constant. A derivative (D) controller has an output proportional to the derivative of its input $e$, that is, $u=K_Dde/dt$, where $K_D$ is a proportionality constant. An integral (I) controller has an output $u$ proportional to the integral of its input $e$, that is, $u=K_I\int{e(t)\,dt}$, where $K_I$ is a proportionality constant.  PD, PI, DI, and PID controllers are combinations of proportional (P), derivate (D), and integral (I) controllers. For example, the output $u$ of a PD controller has the form
 	\begin{equation}
 		u_{PD}=K_Pe+K_D\frac{de}{dt}
@@ -452,6 +482,16 @@ and the output of a PID controller has the form
 \subsection{Adaptive Control Systems}
 
 \chapter{Image Processing}
+
+\section{Image Registration}
+
+Brown divides image registration into four classes of problems: (1) multimodal registration, (2) template matching, (3) viewpoint registration and (4) temporal registration. Multimodal registration is registration of the same scene acquired from different sensors. Template registration is finding a match for a reference pattern in an image. Viewpoint registration is registration of images taken from different viewpoints. Finally, temporal registration is registration of the same scene taken at different times or under different conditions.
+
+Given two images $I_1(x,y)$ and $I_2(x,y)$, image registration is the mapping between the two images which can be expressed as
+\begin{align}
+	I_2(x,y)&=g(I_1(f(x,y)))\\
+	&=g(I_1(f_x(x,y),f_y(x,y)))
+\end{align}
 
 \backmatter
 
