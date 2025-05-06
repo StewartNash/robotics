@@ -408,6 +408,17 @@ GH = control.TransferFunction(numerator, denominator)
 plt.figure()
 control.nyquist(GH, omega_limits=(0.01, 100), omega_num=1000)
 plt.show()
+
+omega = numpy.logspace(-2, 2, 100)
+magnitude, phase, w = control.frequency_response(GH, omega)
+
+plt.figure()
+ax = plt.subplot(111, projection='polar')
+ax.plot(phase[0], magnitude[0])
+ax.set_theta_zero_location("N")
+ax.set_theta_direction(-1)
+ax.grid(True)
+plt.show()
 \end{verbatim}
 
 \end{example}
@@ -426,6 +437,12 @@ plt.show()
 		P_\mathrm{LL}(s)=\frac{(s+a_1)(s+b_2)}{(s+b_1)(s+a_2)}\quad{b_1>a_1,b_2>a_2}
 	\end{equation}
 	This compensator has two zeros and two poles. For mechanization considerations, the restriction $a_1b_2=b_1a_2$ is usually imposed.
+	
+	Say that we have a continuous system with an open-loop frequency response function given by
+	\begin{equation}
+		GH(s)=\frac{K_1}{s(s+p_1)(s+p_2)}\quad{p_1,p_2,K_1>0}
+	\end{equation}
+	
 \end{example}
 
 \begin{example}
