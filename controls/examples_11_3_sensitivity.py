@@ -56,3 +56,4 @@ ax2.grid(True)
 
 plt.tight_layout()
 plt.show()
+fig.savefig("../manual/images/example_11_3.png")
