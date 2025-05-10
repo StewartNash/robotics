@@ -572,6 +572,26 @@ Given two images $I_1(x,y)$ and $I_2(x,y)$, image registration is the mapping be
 	&=g(I_1(f_x(x,y),f_y(x,y)))
 \end{align}
 
+The most commone general transformations of images are rigid, affine, projective, perspective and global polynomial. An affine transformation is a combination of scaling, translation and rotation. It can be represented by the equation
+\begin{equation}
+	\begin{pmatrix}
+		x_2\\
+		y_2
+	\end{pmatrix}=
+	\begin{pmatrix}
+		t_x\\
+		t_y
+	\end{pmatrix}+
+	s\begin{pmatrix}
+		\cos{\theta}&-\sin{\theta}\\
+		\sin{\theta}&\cos{\theta}
+	\end{pmatrix}
+	\begin{pmatrix}
+		x_1\\
+		y_1
+	\end{pmatrix}
+\end{equation}
+
 \backmatter
 
 \end{document}
