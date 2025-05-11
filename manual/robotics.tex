@@ -431,7 +431,21 @@ plt.show()
 	\begin{equation}
 		GH(s)=\frac{K_1}{s(s+p_1)(s+p_2)}\quad{p_1,p_2,K_1>0}
 	\end{equation}
-
+	Furthermore, suppose that the system is stable and the pase margin is greater than 45 degrees. However, for a given application, the phase margin is too large, causing a longer than desire delay time in the system transient response. Also, the steady state error is too large, or, equivalently, the velocity error constant $K_v$ is too small by a factor of $\lambda>1$. The system can be modified by a combination of gain factor compensation to meet the stead state specification and phase lead compensation to improve the transient response. We first add the gain factor $\lambda$ to the system resulting the open-loop transfer function
+	\begin{equation}
+		GH(s)=\frac{\lambda{K_1}}{s(s+p_1)(s+p_2)}\quad{p_1,p_2,K_1>0}
+	\end{equation}
+	After this, we would like to add a lead network. However, the lead network would attenuate the lower frequencies. So we must increase the gain by $b/a$ while adding the lead compensator. When the gain is increased before adding the lead compensator, the system may become unstable, and the resulting open-loop transfer function is
+	\begin{equation}
+		GH(s)=\frac{\lambda{K_1}(b/a)}{s(s+p_1)(s+p_2)}\quad{p_1,p_2,K_1>0}
+	\end{equation}
+	The lead network can then be inserted in front of the gain-factor amplifier to obtain the final system response
+	\begin{equation}
+		GH(s)=\frac{\lambda{K_1}(b/a)(s+a)}{s(s+p_1)(s+p_2)(s+b)}\quad{p_1,p_2,K_1>0}
+	\end{equation}
+	
+	The same procedure can be used to add lag compensation to the uncompensated system.
+	
 \begin{verbatim}
 import numpy
 import matplotlib.pyplot as plt
@@ -561,6 +575,8 @@ and the output of a PID controller has the form
 \subsection{Adaptive Control Systems}
 
 \chapter{Image Processing}
+
+Morphological (image) processing involves tools derived using mathematical set theory to extract components of the image that may describe or represent (the shape of) regions in the image. Image segmentation involves subdividing an image into its constituent regions or objects. We will not treat image segmentation in detail here. Object recognition is the recognition of objects or patterns which can be considered individual regions in an image.
 
 \section{Image Registration}
 
