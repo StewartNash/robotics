@@ -289,6 +289,29 @@ The solution to \eqref{eq:3_25} on the interval $0\leq{t}<\infty$ is given by
 	\mathbf{x}(t)=e^{At}\mathbf{x}(0)+\int_0^t{e^{A(t-\tau)}B\mathbf{u}(\tau)\,d\tau}
 \end{equation}
 
+A basic mathematical model for a linear time-invariant system consists of the state differential equation and the algebraic output equation
+\begin{align}
+	\dot{x}(t)=&Ax(t)+Bu(t)\quad{x(t_0)=x_0}\\
+	y(t)=&Cx(t)+Du(t)
+\end{align}
+As we saw, the closed-form expression for the complete solution, a `variation-of-constants formula' is given by
+\begin{equation}
+	x(t)=e^{A(t-t_0)}x(t_0)+\int_{t_0}^t{e^{A(t-\tau)}Bu(\tau)\,d\tau}
+\end{equation}
+The complete output response is given (using substition) by
+\begin{equation}
+	y(t)=Ce^{A(t-t_0)}x(t_0)+\int_{t_0}^t{Ce^{A(t-\tau)}Bu(\tau)\,d\tau}+Du(t)
+\end{equation}
+The Laplace transform of the output equation can be taken. In that case, the solution to $X(s)$ is
+\begin{equation}
+	X(s)=(sI-A)^{-1}x_0+(sI-A)^{-1}BU(s)
+\end{equation}
+The solution to the output equation is
+\begin{align}
+	Y(s)&=CX(s)+DU(s)\\
+	&=C(sI-A)^{-1}x_0+[C(sI-A)^{-1}B+D]U(s)
+\end{align}
+
 \subsection{Systems Modeled by Constant Coefficient Linear Difference Equations}
 
 An $n$-th order (linear constant-coefficient) difference equation is given by
