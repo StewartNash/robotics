@@ -312,6 +312,27 @@ The solution to the output equation is
 	&=C(sI-A)^{-1}x_0+[C(sI-A)^{-1}B+D]U(s)
 \end{align}
 
+\subsection{Controllability}
+
+A state $x\in\mathbb{R}^n$ is controllable to the origin if for a given initial time $t_0$ there exists a finite final time $t_f>t_0$ and a piecewise continuous input signal $u(\cdot)$ defined on $[t_0,t_f]$ such that with inital state $x(t_0)=x_0$, the final state satisfies
+\begin{align}
+	x(t_f)&=e^{A(t_f-t_0)}x+\int_{t_0}^{t_f}{e^{A(t_f-\tau)}Bu(\tau)\,d\tau}\\
+	&=0\in\mathbb{R}^n
+\end{align}
+The state equation $\dot{x}(t)=Ax(t)+Bu(t)\quad{x}(t_0)=x_0$ is controllable if every state $x\in\mathbb{R}^n$ is controllable to the origin.
+The controllability matrix is
+\begin{equation}
+	P=[B\,AB\,A^2B\,\cdots\,A^{n-1}B]
+\end{equation}
+The linear state equation is controllable if and only if $\mathrm{rank}\,P=n$. For any initial time $t_0$ and finite final time $t_f>t_0$, the Gramian is defined as
+\begin{equation}
+	W(t_0,t_f)=\int_{t_0}^{t^f}{e^{A(t_0-\tau)}BB^Te^{A^T(t_0-\tau)}\,d\tau}
+\end{equation}
+\begin{equation}
+	\mathrm{rank}\,P=n
+\end{equation}
+if and only if the controllability Gramian $W(t_0,t_f)$ is nonsingular for any initial and finite final time.
+
 \subsection{Examples}
 
 \begin{example}
