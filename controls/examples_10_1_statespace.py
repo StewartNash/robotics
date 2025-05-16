@@ -35,14 +35,19 @@ D = np.array([
 
 sys = control.StateSpace(A, B, C, D)
 T = np.linspace(0, 10, 1000)
-T, y = control.step_response(sys, T)
+U = np.zeros((2, len(T)))
+X0 = [0.2, 0, 0.2, 0]
+#T, y, x = control.input_output_response(sys, T=T, U=U, X0=X0)
+T, y = control.forced_response(sys, T=T, U=U, X0=X0)
 
 plt.figure(figsize=(10, 5))
 plt.plot(T, y[0], label="m1 position")
-plot.plot(T, y[1], label="m2 position")
-plt.title("Step response of example 10-1")
+plt.plot(T, y[1], label="m2 position")
+plt.title("Zero-input response of example 10-1")
 plt.xlabel("Time (s)")
 plt.ylabel("Displacement (m)")
 plt.grid(True)
 plt.legend()
+plt.tight_layout()
+plt.savefig("../manual/images/example_10_1.png", dpi=300, bbox_inches='tight')
 plt.show()
