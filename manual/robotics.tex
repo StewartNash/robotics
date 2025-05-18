@@ -291,7 +291,7 @@ The solution to \eqref{eq:3_25} on the interval $0\leq{t}<\infty$ is given by
 
 A basic mathematical model for a linear time-invariant system consists of the state differential equation and the algebraic output equation
 \begin{align}
-	\dot{x}(t)=&Ax(t)+Bu(t)\quad{x(t_0)=x_0}\\
+	\dot{x}(t)=&Ax(t)+Bu(t)\quad{x(t_0)=x_0}\label{eq:stateeqn}\\
 	y(t)=&Cx(t)+Du(t)
 \end{align}
 As we saw, the closed-form expression for the complete solution, a `variation-of-constants formula' is given by
@@ -319,12 +319,12 @@ A state $x\in\mathbb{R}^n$ is controllable to the origin if for a given initial 
 	x(t_f)&=e^{A(t_f-t_0)}x+\int_{t_0}^{t_f}{e^{A(t_f-\tau)}Bu(\tau)\,d\tau}\\
 	&=0\in\mathbb{R}^n
 \end{align}
-The state equation $\dot{x}(t)=Ax(t)+Bu(t)\quad{x}(t_0)=x_0$ is controllable if every state $x\in\mathbb{R}^n$ is controllable to the origin.
+The state equation \ref{eq:stateeqn} is controllable if every state $x\in\mathbb{R}^n$ is controllable to the origin.
 The controllability matrix is
 \begin{equation}
 	P=[B\,AB\,A^2B\,\cdots\,A^{n-1}B]
 \end{equation}
-The linear state equation is controllable if and only if $\mathrm{rank}\,P=n$. For any initial time $t_0$ and finite final time $t_f>t_0$, the Gramian is defined as
+The linear state equation \ref{eq:stateeqn} is controllable if and only if $\mathrm{rank}\,P=n$. For any initial time $t_0$ and finite final time $t_f>t_0$, the Gramian is defined as
 \begin{equation}
 	W(t_0,t_f)=\int_{t_0}^{t^f}{e^{A(t_0-\tau)}BB^Te^{A^T(t_0-\tau)}\,d\tau}
 \end{equation}
@@ -332,6 +332,22 @@ The linear state equation is controllable if and only if $\mathrm{rank}\,P=n$. F
 	\mathrm{rank}\,P=n
 \end{equation}
 if and only if the controllability Gramian $W(t_0,t_f)$ is nonsingular for any initial and finite final time.
+
+\subsection{Observability}
+
+A state $x_0\in\mathbb{R}^n$ is unobservable if the zero-input response of the linear state equation \ref{eq:stateeqn} with initial state $x(t_0)=x_0$ is $y(t)\equiv{0}$ for all $t\geq{t_0}$. The state equation \ref{eq:stateeqn} is observable if the zero vector $0\in\mathbb{R}^n$ is the only unobservable state.
+The observability matrix is
+\begin{equation}
+	Q=
+	\begin{bmatrix}
+		C\\
+		CA\\
+		CA^2\\
+		\vdots\\
+		CA^{n-1}
+	\end{bmatrix}
+\end{equation}
+The linear state equation \ref{eq:stateeqn} is observable if and only if $\mathrm{rank}\,Q=n$.
 
 \subsection{Examples}
 
