@@ -324,14 +324,12 @@ The controllability matrix is
 \begin{equation}
 	P=[B\,AB\,A^2B\,\cdots\,A^{n-1}B]
 \end{equation}
-The linear state equation \ref{eq:stateeqn} is controllable if and only if $\mathrm{rank}\,P=n$. For any initial time $t_0$ and finite final time $t_f>t_0$, the Gramian is defined as
+The linear state equation \ref{eq:stateeqn} is controllable if and only if $\mathrm{rank}\,P=n$.
+For any initial time $t_0$ and finite final time $t_f>t_0$, the controllability Gramian is defined as
 \begin{equation}
 	W(t_0,t_f)=\int_{t_0}^{t^f}{e^{A(t_0-\tau)}BB^Te^{A^T(t_0-\tau)}\,d\tau}
 \end{equation}
-\begin{equation}
-	\mathrm{rank}\,P=n
-\end{equation}
-if and only if the controllability Gramian $W(t_0,t_f)$ is nonsingular for any initial and finite final time.
+$\mathrm{rank}\,P=n$ if and only if the controllability Gramian $W(t_0,t_f)$ is nonsingular for any initial and finite final times $t_0<t_f$.
 
 \subsection{Observability}
 
@@ -348,6 +346,11 @@ The observability matrix is
 	\end{bmatrix}
 \end{equation}
 The linear state equation \ref{eq:stateeqn} is observable if and only if $\mathrm{rank}\,Q=n$.
+For any initial time $t_0$ and finite final time $t_f>t_0$, the observability Gramian is defined as
+\begin{equation}
+	M(t_0,t_f)=\int_{t_0}^{t^f}{e^{A(\tau-t_0)}C^TCe^{A^T(\tau-t_0)}\,d\tau}
+\end{equation}
+$\mathrm{rank}\,Q=n$ if and only if the observability Gramian $M(t_0,t_f)$ is nonsingular for any initial and finite final times $t_0<t_f$.
 
 \subsection{Examples}
 
