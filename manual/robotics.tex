@@ -774,12 +774,12 @@ In this section we look at the effect of a random process (RP) on a a system. A 
 
 Let the autocorrelation functions (ACF) of the input and output processes be given by $\phi_{xx}(m)$ and $\phi_{yy}(m)$, or
 \begin{align}
-	\phi_{xx}(m)&=E[x(n)x(n+m)]&=\[\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{x(n)x(n+m)}}\]\\
-	\phi_{yy}(m)&=E[y(n)y(n+m)]&=\[\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{y(n)y(n+m)}}\]
+	\phi_{xx}(m)&=E[x(n)x(n+m)]=\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{x(n)x(n+m)}}\\
+	\phi_{yy}(m)&=E[y(n)y(n+m)]=\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{y(n)y(n+m)}}
 \end{align}
 If the process is assumed to be WSS, the ACF depends only on the time difference; in that case, the system output process ACF is given by
 \begin{equation}
-	\phi_{yy}(m)=\sum_{i=-\infty}^\infty\sum_{j=-infty}^\infty{h(i)h(i+j)\phi_{xx}(m-j)}
+	\phi_{yy}(m)=\sum_{i=-\infty}^\infty\sum_{j=-\infty}^\infty{h(i)h(i+j)\phi_{xx}(m-j)}
 \end{equation}
 The CCF of two discrete-time random proceses $x(n)$ and $y(n)$ that are jointly WSS RPs is
 \begin{equation}
@@ -787,7 +787,7 @@ The CCF of two discrete-time random proceses $x(n)$ and $y(n)$ that are jointly 
 \end{equation}
 The CCF of the input $x(n)$ and response $y(n)$ of a discrete-time linear system can then be given as
 \begin{equation}
-	\phi_{xy}(m)=\sum_{j=-infty}^\infty{h(j)\phi_{xx}(m-j)}
+	\phi_{xy}(m)=\sum_{j=-\infty}^\infty{h(j)\phi_{xx}(m-j)}
 \end{equation}
 
 \subsection{Power Spectra}
