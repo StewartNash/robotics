@@ -756,6 +756,44 @@ and the output of a PID controller has the form
 
 \subsection{Adaptive Control Systems}
 
+\chapter{Signal Processing}
+
+This chapter represents a brief review of signal processing before continuing into imaging processing. The content of this chapter may be entirely omitted from any review or robotics course.
+
+\section{FIR Digital Filter Design}
+
+\section{IIR Digital Filter Design}
+
+\section{Fourier Transform Algorithms}
+
+\section{Random Processes, Power Spectra and Noise}
+
+\subsection{Random Processes}
+
+In this section we look at the effect of a random process (RP) on a a system. A wide-sense stationary (WSS) process only requires that the first and second moments are not function of time, and that the autocorrelation function depends only on the time difference. An ergodic random process requires that any statistic calculated by averaging over all members of an ergodic ensemble at a a fixed time can be calculated by averaging over all time on a single representative member of the ensemble; that is, time averages equal ensemble averages.
+
+Let the autocorrelation functions (ACF) of the input and output processes be given by $\phi_{xx}(m)$ and $\phi_{yy}(m)$, or
+\begin{align}
+	\phi_{xx}(m)&=E[x(n)x(n+m)]&=\[\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{x(n)x(n+m)}}\]\\
+	\phi_{yy}(m)&=E[y(n)y(n+m)]&=\[\lim_{x\to\infty}{\frac{1}{2N+1}\sum_{n=-N}^N{y(n)y(n+m)}}\]
+\end{align}
+If the process is assumed to be WSS, the ACF depends only on the time difference; in that case, the system output process ACF is given by
+\begin{equation}
+	\phi_{yy}(m)=\sum_{i=-\infty}^\infty\sum_{j=-infty}^\infty{h(i)h(i+j)\phi_{xx}(m-j)}
+\end{equation}
+The CCF of two discrete-time random proceses $x(n)$ and $y(n)$ that are jointly WSS RPs is
+\begin{equation}
+	\phi_{xy}(m)=E[x(n)y(n+m)]
+\end{equation}
+The CCF of the input $x(n)$ and response $y(n)$ of a discrete-time linear system can then be given as
+\begin{equation}
+	\phi_{xy}(m)=\sum_{j=-infty}^\infty{h(j)\phi_{xx}(m-j)}
+\end{equation}
+
+\subsection{Power Spectra}
+
+\subsection{Noise}
+
 \chapter{Image Processing}
 
 Morphological (image) processing involves tools derived using mathematical set theory to extract components of the image that may describe or represent (the shape of) regions in the image. Image segmentation involves subdividing an image into its constituent regions or objects. We will not treat image segmentation in detail here. Object recognition is the recognition of objects or patterns which can be considered individual regions in an image.
