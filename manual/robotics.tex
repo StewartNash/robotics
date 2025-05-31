@@ -758,11 +758,36 @@ and the output of a PID controller has the form
 
 \chapter{Signal Processing}
 
-This chapter represents a brief review of signal processing before continuing into imaging processing. The content of this chapter may be entirely omitted from any review or robotics course.
+This chapter represents a brief review of signal processing before continuing into image processing. The content of this chapter may be entirely omitted from any review or robotics course.
+
+\section{IIR Digital Filter Design}
+
+An infinite impulse response (IIR) filter is characterized by an impulse response of infinite duration.
+
+\subsection{Bilinear Transformation}
+
+One IIR digital filter (DF) design method is the bilinear transformation (BT) of classic analog filters. BT uniquely aps the entire left half of the $s$-plane into the interior of the unit circle in the $z$-plane. The design procedure is as follows:
+\begin{enumerate}
+	\item Design formulas -- generate analog poles and zeros of Butterworth, Chebyshev, and elliptic lowpass filters
+	\item Frequency band transformation formulas -- converts analog lowpass filters into analog highpass, bandpass, and bandstop filters
+	\item Bilinear transformation -- maps poles in the $s$-plane to poles in the $z$-plane
+\end{enumerate}
+
+For the linear network to be causal and stable (1) the transfer function should be a rational function of $s$ with real coefficients, (2) the poles of the analog filter must lie in the left half of the $s$-plane, and (3) the degree of the numerator (polynomial) must be less than or equal to the degree of the denominator (polynomial).
+
+\subsection{Pole-Zero Placement}
+
+This design method involves direct placement of the poles and zeros in the $z$-plane to meet an arbitrary frequency repsonse specification.
+
+\subsection{Complex Coefficients}
+
+\subsection{CAD}
+
+This is a practical method for designing IIR digital filters with aribitrary, prescribed magnitude characteristics.
 
 \section{FIR Digital Filter Design}
 
-\section{IIR Digital Filter Design}
+A finite impule response (FIR) filter is characterized by an impulse response of finite duration.
 
 \section{Fourier Transform Algorithms}
 
