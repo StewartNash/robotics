@@ -814,8 +814,24 @@ The CCF of the input $x(n)$ and response $y(n)$ of a discrete-time linear system
 \begin{equation}
 	\phi_{xy}(m)=\sum_{j=-\infty}^\infty{h(j)\phi_{xx}(m-j)}
 \end{equation}
+The autocovariance (ACVF) and cross-covariance (CCVF) functoins of two stationary RP $x(n)$ and $y(n)$ are given by
+\begin{align}
+	\gamma_{xx}(m)&=E\{[x(n)-m_x][(x(n+m)+m_x)]\}=\phi_{xx}(m)-m^2_x\\
+	\gamma_{xy}(m)&=E\{[x(n)-m_x][(y(n+m)-m_y)]\}=\phi_{xy}(m)-m_xm_y
+\end{align}
+respectively. The Z-transform of $\gamma_{xx}(m)$ and $\gamma_{xy}(m)$ are given by $\Gamma_{xx}(z)$ and $\Gamma_{xy}(z)$, respectively. The Z-transforms exist only when $m_x=-$.
 
 \subsection{Power Spectra}
+
+The Z-transform and the inverse Z-transform of the ACF of a zero-mean WSS discrete-time RP $x(n)$ form a transform pair $\mathbf{\Phi}_{xx}(z)\leftrightarrow\phi_{xx}(m)$ as shown by
+\begin{align}
+	\mathbf{\Phi}_{xx}(z)&=\sum_{m=-\infty}^{\infty}{\phi_{xx}(m)z^{-m}}\\
+	\phi_{xx}(m)&=\frac{1}{2{\pi}j}\oint_c{\mathbf{\Phi}_{xx}(z)z^{m-1}\,dz}
+\end{align}
+where the power spectral density (PSD) is defined as the Z-transform of the ACF with $z=e^{j2{\pi}fT}$ or
+\begin{equation}
+	P_{xx}(f)=\mathbf{\Phi}_{xx}(e^{j2{\pi}fT})=\sum_{m=-\infty}^{\infty}{\phi_{xx}(m)e^{j2{\pi}fT}}
+\end{equation}
 
 \subsection{Noise}
 
