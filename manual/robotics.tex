@@ -832,8 +832,52 @@ where the power spectral density (PSD) is defined as the Z-transform of the ACF 
 \begin{equation}
 	P_{xx}(f)=\mathbf{\Phi}_{xx}(e^{j2{\pi}fT})=\sum_{m=-\infty}^{\infty}{\phi_{xx}(m)e^{j2{\pi}fT}}
 \end{equation}
+The Z-transform of the CCF is given by
+\begin{equation}
+	\mathbf{\Phi}_{xy}(z)=\sum_{m=-\infty}^{\infty}{\phi_{xy}(m)z^{-m}}
+\end{equation}
+The cross-power spectral density (CPSD) of two functions is the Z-transform of their CCF with $z=e^{j2{\pi}fT}$ or
+\begin{equation}
+	P_{xy}(f)=\mathbf{\Phi}_{xy}(e^{j2{\pi}fT})=\sum_{m=-\infty}^{\infty}{\phi_{xy}(m)e^{j2{\pi}fT}}
+\end{equation}
+For a linear system with response $y(n)$, input $x(n)$ and impulse response $h(n)$, we can show
+\begin{align}
+	\mathbf{\Phi}_{yy}(z)&=H(z)H(z^{-1})\mathbf{\Phi}_{xx}(z)\\
+	P_{yy}(f)&=\mathbf{\Phi}_{yy}(e^{j2{\pi}fT})=|H(e^{j2{\pi}fT})|\mathbf{\Phi}_{xx}(e^{j2{\pi}fT})
+\end{align}
+This says that hte the PSD of the output process of a discrete-time linear system is equal to the PSD of the input process times the squared magnitude response of the system. We can then show that the CPSD is
+\begin{align}
+	\mathbf{\Phi}_{xy}(z)&=H(z)\mathbf{\Phi}_{xx}(z)\\
+	P_{xy}(f)&=H(e^{j2{\pi}fT})\mathbf{\Phi}_{xx}(e^{j2{\pi}fT})=H(e^{j2{\pi}fT})P_{xx}(f)
+\end{align}
+Consider two linear time-invariant systems with outputs $v(nT)$ and $w(nT)$, respectively, inputs $x(nT)$ and $y(nT)$, respsectively, and impulse responses $h_1(n)$ and $h_2(n)$, respectively. The CPSD is given by
+\begin{equation}
+	\mathbf{\Phi}_{vw}(z)=H_1(z)H_2(z^{-1})\mathbf{\Phi}_{xy}(z)
+\end{equation}
 
 \subsection{Noise}
+
+The ACF and PSD of white noise are expressed by
+\begin{align}
+	\phi_{xx}(m)&=\sigma_x^2\delta(m)\\
+	P_{xx}(f)&=\mathbf{\Phi}_{xx}(e^{j2{\pi}fT})=\sigma_x^2
+\end{align}
+Therefore, the response of a digital fitler to a white-noise input is
+\begin{equation}
+	P_{yy}(f)=\sigma_x^2|H(e^{j2{\pi}fT})|^2
+\end{equation}
+With an input with zero mean and the variance (second moment) $\sigma_x^2$, the response of a system with an impulse response $h(n)$ is
+\begin{equation}
+	\sigma_y^2=\sigma_x^2\sum_{n=0}^{\infty}{h^2(n)}
+\end{equation}
+Suppose that we would like to determine the average output power of a filter to a white-noise random process with zero mean and variance $\sigma_x^2$. For the ACF with $m=0$, we find the avaerage power in the input is
+\begin{equation}
+	\phi_{xx}(0)=E[x^2(n)]=\frac{1}{2{\pi}j}\oint_c{\mathbf{\Phi}_{xx}(z)z^{m-1}\,dz}=\sigma_x^2
+\end{equation}
+The average output power is then given by
+\begin{equation}
+	\phi_{yy}(0)=\frac{1}{2{\pi}j}\oint_c{\sigma_x^2H(z^{-1})H(z)z^{-1}\,dz}
+\end{equation}
 
 \chapter{Image Processing}
 
