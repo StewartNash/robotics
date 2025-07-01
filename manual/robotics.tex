@@ -787,7 +787,44 @@ This is a practical method for designing IIR digital filters with aribitrary, pr
 
 \section{FIR Digital Filter Design}
 
-A finite impule response (FIR) filter is characterized by an impulse response of finite duration.
+A finite impule response (FIR) filter is characterized by an impulse response of finite duration. An FIR filter may also be called a nonrecursive, moving average, transveral or tapped delay line filter. Let us consider the design techniques for FIR digital filters. These filters can be efficiently implemented in the frequency domain, but we will consider the time domain implementation of the FIR filter. These filters are usually solving by using Fourier series or numerical analysis techniques.
+
+A disadvantage of FIR filters is that they must be higher order to achieve a specified magnitude response (as compared to IIR filters). Some characteristics (advantages) of FIR filters are
+\begin{itemize}
+	\item FIR filters can be designed with exactly linear phase
+	\item FIR filters realized nonrecursively are inherently stable
+	\item Quantization noise can be negligible for nonrecursive realizations
+	\item Coefficient accuracy problems inherent in sharp cutoff can be less severe
+	\item FIR filters canbe efficiently implemented in multirate DSP systems
+\end{itemize}
+
+The transfer function of an FIR causal filter is
+\begin{equation}
+	H(z)=\sum_{n=0}^{N-1}{h(n)z^{-n}}
+\end{equation}
+where $h(n)$ is the impulse response of the filter. The difference equation is obtained by taking the inverse Z-transform
+\begin{equation}
+	y(iT)=\sum_{n=0}^{N-1}{h(n)x(iT-nT)}
+\end{equation}
+which turns out to be a convolution summation.
+The Fourier transform of $h(n)$ is
+\begin{equation}
+	y(iT)=\sum_{n=0}^{N-1}{h(n)e^{-j{\omega}nT}}=|H(e^{j{\omega}T})|e^{j\theta(\omega)}
+\end{equation}
+which give the magnitude and phase response
+\begin{align}
+	M(\omega)&=|H(e^{j{\omega}T})|\\
+	\theta(\omega)&=\tan^{-1}{\frac{-\mathrm{Im}\,H(e^{j{\omega}T})}{\mathrm{Re}\,H(e^{j{\omega}T})}}
+\end{align}
+The phase delay and group (time) delay are
+\begin{align}
+	\tau_p&=-\frac{\theta(\omega)}{\omega}\\
+	\tau_g&=-\frac{d\theta(\omega)}{d\omega}
+\end{align}
+In linear phase (aka constant time delay) filters, $\tau_p$ and $\tau_g$ are constant. By definition, we have
+\begin{equation}
+	\theta(\omega)=-\tau\omega\quad-\pi<\omega<\pi
+\end{equation}
 
 \section{Fourier Transform Algorithms}
 
