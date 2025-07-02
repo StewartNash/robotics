@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{multirow}
 
 \newtheoremstyle{example} % Style name
 	{10pt} % Space above
@@ -825,6 +826,37 @@ In linear phase (aka constant time delay) filters, $\tau_p$ and $\tau_g$ are con
 \begin{equation}
 	\theta(\omega)=-\tau\omega\quad-\pi<\omega<\pi
 \end{equation}
+We can show that FIR filters will have constant phase and group delays if
+\begin{align}
+	\tau&=\frac{(N-1)T}{2}\\
+	h(n)&=h[(N-1-n)]\quad{0<n<N-1}
+\end{align}
+The symmetry conditions of the impulse response results in a transfer function that is a mirror-image polynomial.
+\begin{center}
+	\begin{tabular}{|l|l|l|}
+		\multicolumn{3}{l}{Frequency response of constant-delay nonrecursive filters}\\
+		\hline
+		$h(nT)$ & $N$ & $H(e^{j{\omega}T})$\\
+		\hline
+		\multirow{2}{*}{Symmetrical} & Odd & $e^{-j\omega(N-1)T/2}\sum_{k=0}^{(N-1)/2}{a_k\cos{\omega{kT}}}$\\
+		\cline{2-3}
+		& Even & $e^{-j\omega(N-1)T/2}\sum_{k=1}^{N/2}{b_k\cos{[\omega(k-1/2)T]}}$\\
+		\hline
+		\multirow{2}{*}{Antisymmetrical} & Odd & $e^{-j[\omega(N-1)T/2-\pi/2]}\sum_{k=1}^{(N-1)/2}{a_k\sin{\omega{kT}}}$\\
+		\cline{2-3}
+		& Even & $e^{-j[\omega(N-1)T/2-\pi/2]}\sum_{k=1}^{N/2}{b_k\sin{[\omega(k-1/2)T]}}$\\
+		\hline
+	\end{tabular}
+\end{center}
+\begin{center}
+	\begin{tabular}{|l|}
+		\hline
+		$a_0=h\left[\frac{(N-1)T}{2}\right]$\\
+		$a_k=2h\left[\left(\frac{N-1}{2}-k\right)T\right]$\\
+		$b_k=2h\left[\left(\frac{N}{2}-k\right)T\right]$\\
+		\hline
+	\end{tabular}
+\end{center}
 
 \section{Fourier Transform Algorithms}
 
