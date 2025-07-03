@@ -858,6 +858,132 @@ The symmetry conditions of the impulse response results in a transfer function t
 	\end{tabular}
 \end{center}
 
+\subsection{Fourier Series Design Method}
+
+The desired frequency response of an FIR digital filter can be represented byt the Fourier series
+\begin{equation}
+	H(e^{j2{\pi}fT})=\sum_{n=-\infty}^\infty{h_d(n)e^{-j2{\pi}fnT}}
+\end{equation}
+The Fourier coefficients $h_d(n)$ are the desired impulse response sequence of the filter determined from
+\begin{equation}
+	h_d(n)=\frac{1}{F}\int_{-F/2}^{F/2}{H(e^{j2{\pi}fT})e^{j2{\pi}fnT}\,df}
+\end{equation}
+We substitute $e^{j{\omega}T}=z$ to obtain the transfer function
+\begin{equation}
+	H(z)=\sum_{n=-\infty}^\infty{h_d(n)z^{-n}}
+\end{equation}
+For $N$-odd we obtain
+\begin{equation}
+	\begin{split}
+		H(z)&=z^{-(N-1)/2}\sum_{n=-(N-1)/2}^{(N-1)/2}{h_d(n)z^{-n}}\\
+		&=z^{-(N-1)/2}\left[h_d(0)+\sum_{n=1}^{(N-1)/2}{h_d(n)(z^n+z^{-n})}\right]
+	\end{split}
+\end{equation}
+A technique for the design of FIR digital fitlers is to multiply the desired impulse response $h_d(n)$ by a window function $a(n)$. (Window functions are a class of time-domain functions.)
+\begin{equation}
+	h(n)=h_d(n)a(n)
+\end{equation}
+We thus have
+\begin{equation}
+	H_A(e^{j{\omega}T})=\frac{1}{2{\pi}F}\int_{0}^{2{\pi}F}{H(e^{j{\omega}T})A(e^{j(\omega-\Omega)T}\,d\Omega}
+\end{equation}
+
+\subsubsection{Rectangular Window Function}
+The rectangular window function is
+\begin{equation}
+	a_R(n)=
+	\begin{cases}
+		1 & \mathrm{for}\,|n|\leq\frac{N-1}{2}\\
+		0 & \mathrm{otherwise}
+	\end{cases}
+\end{equation}
+Its Fourier transform is
+\begin{equation}
+	\begin{split}
+		A_R(e^{j{\omega}T})&=\sum_{n=-(N-1)/2}^{(N-1)/2}{e^{-j{\omega}nT}}\\
+		&=\frac{\sin{({\omega}NT/2)}}{\sin{({\omega}T/2)}}
+	\end{split}
+\end{equation}
+The causal rectangular window is
+\begin{equation}
+	\begin{split}
+		A_R(e^{j{\omega}NT})&=\sum_{n=0}^{N-1}{e^{-j{\omega}nT}}\\
+		&=e^{-j\omega(N-1)T/2}\frac{\sin{({\omega}NT/2)}}{\sin{({\omega}T/2)}}
+	\end{split}
+\end{equation}
+
+\subsubsection{Hamming Window Function}
+The Hamming window function is
+\begin{equation}
+	a_H(n)=
+	\begin{cases}
+		0.54+0.46\cos{\frac{2{\pi}n}{N-1}} & \mathrm{for}\,|n|\leq\frac{N-1}{2}\\
+		0 & \mathrm{otherwise}
+	\end{cases}
+\end{equation}
+Note that
+\begin{equation}
+	a_H(n)=a_R(n)\left[0.54+0.46\cos{\frac{2{\pi}n}{N-1}}\right]
+\end{equation}
+\begin{equation}
+	\begin{split}
+		A_H(e^{j{\omega}T})&=0.54\frac{\sin{({\omega}NT/2)}}{\sin{({\omega}T/2)}}\\
+		&+0.46\frac{\sin{[{\omega}NT/2-N\pi/(N-1)]}}{\sin{[{\omega}T/2-\pi/(N-1)]}}\\
+		&+0.46\frac{\sin{[{\omega}NT/2+N\pi/(N-1)]}}{\sin{[{\omega}T/2+\pi/(N-1)]}}
+	\end{split}
+\end{equation}
+
+\subsubsection{Blackman Window Function}
+The noncausal Blackman window function is given by
+\begin{equation}
+	a_B(n)=
+	\begin{cases}
+		0.42+0.5\cos{\frac{2{\pi}n}{N-1}}+0.08\cos{\frac{4{\pi}n}{N-1}}, & \mathrm{for}\,|n|<\frac{N-1}{2}\\
+		0 & \mathrm{otherwise}
+	\end{cases}
+\end{equation}
+
+\subsubsection{Kaiser Window Function}
+The Kaiser window function uses functions which approximate the prolate spheroidal functions (which are optimal in a certain sense). The functions given by Kaiser are in terms of the zero-order modified Bessel functions of the first kind, $I_0(x)$. The formula for the Kaiser function is
+\begin{equation}
+	a_K(n)=
+	\begin{cases}
+		\frac{I_0(\beta)}{I_0(\alpha)} & \mathrm{for}\,|n|\leq\frac{N-1}{2}\\
+		0 & \mathrm{otherwise}
+	\end{cases}
+\end{equation}
+where $\alpha$ is an independent variable empirically determined by Kaiser and the parameter $\beta$ is given by
+\begin{equation}
+	\beta=\alpha\left[1-\left(\frac{2n}{N-1}\right)\right]^{0.5}
+\end{equation}
+The modified Bessel function of the first kind is
+\begin{equation}
+	I_0(x)=1+\sum_{n=1}^\infty{\left[\frac{1}{k!}\left(\frac{x}{2}\right)^k\right]^2}
+\end{equation}
+The spectrum of the Kaiser window is given by
+\begin{equation}
+	\sum_{(N-1)/2}^{-(N-1)/2}{a_K(n)e^{-j{\omega}nT}}=a_k(0)+2\sum_{n=1}^{(N-1)/2}{a_K(n)\cos{{\omega}nT}}
+\end{equation}
+The actual passband peak-to-peak ripple $A_p$ is
+\begin{equation}
+	A_p=20\log_{10}{\frac{1+\delta_p}{1-\delta_p}}
+\end{equation}
+The minimum stopband attenuation $A_s$ is
+\begin{equation}
+	A_s=-20\log_{10}{\delta_s}
+\end{equation}
+The transition bandwidth is
+\begin{equation}
+	{\Delta}F=f_s-f_p
+\end{equation}
+The specified passband ripple is $A_p'$.
+The minimum stopband attenuation is $A_s'$.
+We have
+\begin{align}
+	A_p&{\leq}A_p'\\
+	A_s&{\geq}A_s'
+\end{align}
+
 \section{Fourier Transform Algorithms}
 
 \section{Random Processes, Power Spectra and Noise}
