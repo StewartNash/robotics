@@ -984,6 +984,120 @@ We have
 	A_s&{\geq}A_s'
 \end{align}
 
+\subsubsection{FIR Filter Design with the Kaiser Window Function}
+
+This section will describe how to design an FIR filter using the Kaiser window function. First, we must obtain the design specifications:
+\begin{enumerate}
+	\item Filter type: LP, HP, BP, BS
+	\item Critical passband and stopband frequencies in hertz
+	\begin{itemize}
+		\item LP/HP: $f_p$ and $f_s$
+		\item BP/BS: $f_{p1}$, $f_{p2}$, $f_{s1}$, and $f_{s2}$
+	\end{itemize}
+	\item Passband ripple and minimum stopband attenuation in positive decibels: $A_p'$ and $A_s'$
+	\item Sampling frequency in hertz: F
+	\item Filter order ($N$)-odd	 
+\end{enumerate}
+
+The design procedure is as follows:
+\begin{enumerate}
+	\item Determine $\delta$ (the actual design parameter)
+		\begin{align}
+			\delta&=\min(\delta_p,\delta_s)\\
+			\delta_s&=10^{-0.05A_s'}\\
+			\delta_p&=\frac{10^{0.05A_p'}-1}{10^{0.05A_p'}+1}
+		\end{align}
+	\item Calculate $A_s$
+	\item Determine the parameter $\alpha$ from the empirical design equation
+		\begin{equation}
+			\alpha=
+			\begin{cases}
+				0 & \mathrm{for}\,A_s{\leq}21\\
+				0.5842(A_s-21)^{0.4}+0.07886(A_s-21) & \mathrm{for}\,21<A_s{\leq}50\\
+				0.1102(A_s-8.7) & \mathrm{for}\,A_s>50
+			\end{cases}
+		\end{equation}
+	\item Determine the parameter $D$ from the empirical design equation
+		\begin{equation}
+			D=
+			\begin{cases}
+				0.9222 & \mathrm{for}\,A_s{\leq}21\\
+				\frac{A_s-7.95}{14.36} & \mathrm{for}\,A_s>21
+			\end{cases}
+		\end{equation}
+	\item Calculate the filter order for the lowest odd value of $N$
+		\begin{equation}
+			N\geq\frac{FD}{{\Delta}F}+1
+		\end{equation}
+	\item COmpute the modified impulse response
+		\begin{equation}
+			h(n)=a_k(n)h_d(n)\quad\mathrm{for}\,|n|\leq\frac{N-1}{2}
+		\end{equation}
+	\item The transfer function is
+		\begin{equation}
+			H(z)=z^{-(N-1)/2}\left[h(0)+2\sum_{n=0}^{(N-1)/2}{h(n)(z^n+z^{-n})}\right]
+		\end{equation}
+		\begin{align}
+			h(0)&=a_K(0)h_d(0)\\
+			h(n)&=a_K(n)h_d(n)
+		\end{align}
+		The magnitude response is
+		\begin{equation}
+			M(\omega)=h(0)+2\sum_{n=0}^{(N-1)/2}{h(n)\cos{2{\pi}fnT}}
+		\end{equation}
+\end{enumerate}
+
+The FIR filter design equations are as follows:
+\begin{itemize}
+	\item Lowpass FIR filter
+		\begin{align}
+			h_d(n)&=
+			\begin{cases}
+				\left(\frac{2f_c}{F}\right)\frac{\sin{2{\pi}nf_c/F}}{2{\pi}nf_c/F} & \mathrm{for}\,n>0\\
+				\frac{2f_c}{F} & \mathrm{for}\,n=0
+			\end{cases}\\
+			f_c&=0.5(f_p+f_s)\\
+			{\Delta}F&=f_s-f_p
+		\end{align}
+	\item Bandpass FIR filter
+		\begin{align}
+			h_d(n)&=
+			\begin{cases}
+				-\left(\frac{2f_c}{F}\right)\frac{\sin{2{\pi}nf_c/F}}{2{\pi}nf_c/F} & \mathrm{for}\,n>0\\
+				1-2f_c/F & \mathrm{for}\,n=0
+			\end{cases}\\
+			f_c&=0.5(f_p+f_s)\\
+			{\Delta}F&=f_p-f_s
+		\end{align}
+	\item Bandpass FIR filter
+		\begin{align}
+			h_d(n)&=
+			\begin{cases}
+				\frac{1}{n\pi}[\sin{(2{\pi}nf_{c2}/F)}-\sin{(2{\pi}nf_{c1}/F)}] & \mathrm{for}\,n>0\\
+				\frac{2}{F}(f_{c2}-f_{c1}) & \mathrm{for}\,n=0
+			\end{cases}\\
+			f_{c1}&=f_{p1}-\frac{{\Delta}F}{2}\\
+			f_{c2}&=f_{p2}+\frac{{\Delta}F}{2}\\
+			{\Delta}F_1&=f_{p1}-f_{s1}\\
+			{\Delta}F_h&=f_{s2}-f_{p2}\\
+			{\Delta}F&=\min{[{\Delta}F_1,{\Delta}F_h]}
+		\end{align}
+	\item Bandstop FIR filter
+		\begin{align}
+			h_d(n)&=
+			\begin{cases}
+				\frac{1}{n\pi}[\sin{(2{\pi}nf_{c1}/F)}-\sin{(2{\pi}nf_{c2}/F)}] & \mathrm{for}\,n>0\\
+				\frac{2}{F}(f_{c1}-f_{c2})+1 & \mathrm{for}\,n=0
+			\end{cases}\\
+			f_{c1}&=f_{p1}+\frac{{\Delta}F}{2}\\
+			f_{c2}&=f_{p2}-\frac{{\Delta}F}{2}\\
+			{\Delta}F_1&=f_{s1}-f_{p1}\\
+			{\Delta}F_h&=f_{p2}-f_{s2}\\
+			{\Delta}F&=\min{[{\Delta}F_1,{\Delta}F_h]}
+		\end{align}
+\end{itemize}
+
+
 \section{Fourier Transform Algorithms}
 
 \section{Random Processes, Power Spectra and Noise}
