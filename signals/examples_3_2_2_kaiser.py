@@ -102,7 +102,7 @@ def kaiser_coefficients(filter_order, actual_passband_ripple):
 	#for k in range(2 - 1, 30 + 1 - 1):
 	#	KFAC.append(KFAC[k - 1] * k)
 	print ("Computing Kaiser coefficients")
-	for i in range(0, (nk - 1) / 2 + 1):
+	for i in range(0, int((nk - 1) / 2) + 1):
 		print(str(i) + " out of " + str((nk - 1 ) / 2))
 		beta = alpha * math.sqrt(1 - (2 * i / (nk - 1)) ** 2)
 		mod_bessel_fk_beta = 1
@@ -127,7 +127,7 @@ def kaiser_lowpass(passband_frequency_high,
 	sinc_function = lambda x, y : math.sin(x * y * 2 * math.pi / sampling_frequency) / (x * y * 2 * math.pi / sampling_frequency)
 	initial_impulse_response = 2 * cutoff_frequency / sampling_frequency
 	impulse_response = [initial_impulse_response * kaiser_coeffs[0]]
-	for i in range(1, (nk - 1) / 2 + 1):
+	for i in range(1, int((nk - 1) / 2) + 1):
 		impulse_response.append(initial_impulse_response * sinc_function(cutoff_frequency, i) * kaiser_coeffs[i])
 	
 	return impulse_response
@@ -142,7 +142,7 @@ def kaiser_highpass(passband_frequency_low,
 	sinc_function = lambda x, y : math.sin(x * y * 2 * math.pi / sampling_frequency) / (x * y * 2 * math.pi / sampling_frequency)
 	initial_impulse_response = -2 * cutoff_frequency / sampling_frequency
 	impulse_response = [(1 + initial_impulse_response) * kaiser_coeffs[0]]
-	for i in range(1, (nk - 1) / 2 + 1):
+	for i in range(1, int((nk - 1) / 2) + 1):
 		impulse_response.append(initial_impulse_response * sinc_function(cutoff_frequency, i) * kaiser_coeffs[i])
 	
 	return impulse_response
@@ -157,7 +157,7 @@ def kaiser_bandpass(passband_frequency_low,
 	cutoff_frequency_low = passband_frequency_low - transition_bandwidth / 2
 	cutoff_frequency_high = passband_frequency_high + transition_bandwidth / 2
 	impulse_response = [(2 / sampling_frequency) * (cutoff_frequency_high - cutoff_frequency_low) * kaiser_coeffs[0]]
-	for i in range(1, (nk - 1) / 2 + 1):
+	for i in range(1, int((nk - 1) / 2) + 1):
 		argument = i * 2 * math.pi / sampling_frequency
 		impulse_response.append(1 / (math.pi * i) * math.sin(cutoff_frequency_high * argument) - math.sin(cutoff_frequency_low * argument) * kaiser_coeffs[i])
 		print("i = " + str(i) + " H(i) = " + str(impulse_response[i]))
@@ -170,10 +170,11 @@ def kaiser_bandstop(passband_frequency_low,
 	transition_bandwidth,
 	filter_order,
 	kaiser_coeffs):
+	nk = filter_order
 	cutoff_frequency_low = passband_frequency_low + transition_bandwidth / 2
 	cutoff_frequency_high = passband_frequency_high - transition_bandwidth / 2
 	impulse_response = [(2 * (cutoff_frequency_low - cutoff_frequency_high) / sampling_frequency + 1) * kaiser_coeffs[0]]
-	for i in range(1, (nk - 1) / 2 + 1):
+	for i in range(1, int((nk - 1) / 2) + 1):
 		argument = i * 2 * math.pi / sampling_frequency
 		impulse_response.append(1 / (math.pi * i) * (math.sin(cutoff_frequency_low * argument) - math.sin(cutoff_frequency_high * argument)) * kaiser_coeffs[i])
 		
