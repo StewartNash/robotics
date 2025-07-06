@@ -64,7 +64,7 @@ def kaiser_filter_order(filter_type, fp1, fp2, fa1, fa2, f, ap, aa):
 		_del = d1
 	else:
 		_del = d2
-	aap = -20 * math.log10(_del)) / math.log10(10)
+	aap = -20 * math.log10(_del) / math.log10(10)
 	if aap <= 21:
 		pard = 0.9222
 	else:
@@ -115,7 +115,7 @@ def kaiser_lowpass(FP2, FA2, FS, WK):
 	H1 = 2 * WC / FS
 	H = [H1 * WK[0]]
 	for i in range(1, (NK - 1) / 2 + 1):
-		H.append(H1 * fnsx(WC, i) * WK[i + 1 - 1]
+		H.append(H1 * fnsx(WC, i) * WK[i + 1 - 1])
 	
 	return H
 
@@ -138,7 +138,7 @@ def kaiser_bandpass(FP1, FP2, BT, WK):
 	for i in range(1, (NK - 1) / 2 + 1):
 		ARG = i * 2 * math.pi / FS
 		H.append(1 / (math.pi * i) * math.sin(WC2 * ARG) - math.sin(WC1 * ARG) * WK[i])
-		print("i = " + str(i) + " H(i) = " + str(H[i])
+		print("i = " + str(i) + " H(i) = " + str(H[i]))
 		
 	return H
 	
@@ -149,7 +149,7 @@ def kaiser_bandstop(FP1, FP2, BT):
 	H = [(2 * (WC1 - WC2) / FS + 1) * WK[0]]
 	for i in range(1, (NK - 1) / 2 + 1):
 		ARG = i * 2 * math.pi / FS
-		H.append(1 / (math.pi * i) * (math.sin(WC1 * ARG) - math.sin(WC2 * ARG)) * WK[i]
+		H.append(1 / (math.pi * i) * (math.sin(WC1 * ARG) - math.sin(WC2 * ARG)) * WK[i])
 		
 	return H
 	
