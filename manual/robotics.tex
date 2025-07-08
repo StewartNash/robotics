@@ -790,11 +790,24 @@ We refer to $\omega_p$ as the passband frequency and $\omega_s$ as the stopband 
 
 \subsubsection{Butterworth Filters}
 
-
+(By definition) Butterworth filters have a magnitude response that is maximally flat in the passband. The magnitude squared function for an $n$-th order analog Butterworth filter is
+\begin{equation}
+	|H_n(j\omega)|^2=\frac{1}{1+\varepsilon^2\left(\frac{\omega}{\omega_p}\right)^{2n}}
+\end{equation}
 
 \subsubsection{Chebysheve Filters}
+(By definition) A Chebyshev filter has a magnitude response that is equiripple in the passband and monotonic in the stopband for type 1 or monotonic in the passband and equiriple in the stopband for type 2. Regarding the analog filter, the analytic form for the squared magnitude function (for an  $n$-th order filter) is
+\begin{equation}
+	|H_n(j)|^2=\frac{1}{1+\varepsilon^2T_n^2\left(\frac{\omega}{\omega_p}\right)}
+\end{equation}
+where $T_n$ is the Chebyshev polynomial of the $n$-th order.
 
 \subsubsection{Elliptic Filters}
+(By definition) An elliptic filter has a magnitude response that is equiripple in both the passband and stopband. The magnitude response of the the filter is
+\begin{equation}
+	|H_n(j\omega)|^2=\frac{1}{1+\varepsilon^2R_n^2(\omega)}
+\end{equation}
+where $R_n$ is the $n$-th order elliptic rational function (also known as the Chebyshev rational function). (Elliptic filters are optimum in the sense that for a given order and ripple specification it achieves the fastest transition between the passband and stopband - the narrowest transition bandwidth.) 
 
 \subsection{Pole-Zero Placement}
 

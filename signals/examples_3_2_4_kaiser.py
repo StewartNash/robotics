@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from examples_3_2_2_kaiser import kaiser_filter_order, kaiser_coefficients, kaiser_lowpass
+from examples_3_2_2_kaiser import kaiser_filter_order, kaiser_coefficients, kaiser_bandpass
 from examples_3_2_2_kaiser import FilterType
 
 def compute_ripple_parameters(minimum_stopband_attenuation, specified_passband_ripple):
@@ -32,26 +32,32 @@ def magnitude_response(omega, impulse_response, sampling_frequency, filter_order
 #FREQUENCY_RESOLUTION = 100
 FREQUENCY_RESOLUTION = 500
 
-# Example 5.4
+# Example 5.6
 # -----------
-# Using the Kaiser window method, design an FIR lowpass digital filter with
-# actual_passband_ripple	(leq)	0.1	[dB]
-# minimum_stopband_attenuation	(geq)	44	[dB]
-# passband_frequency(_high)	(eq)	500	[Hz]
-# stopband_frequency(_high)	(eq)	750	[Hz]
-# sampling_frequency		(eq)	2500	[Hz]
+# Desing a bandpass filter satisfying the following specifications
+# actual_passband_ripple	(leq)	0.5	[dB]
+# minimum_stopband_attenuation	(geq)	35	[dB]
+# passband_frequency_low	(eq)	120	[Hz]
+# passband_frequency_high	(eq)	180	[Hz]
+# stopband_frequency_low	(eq)	60	[Hz]
+# stopband_frequency_high	(eq)	240	[Hz]
+# sampling_frequency		(eq)	600	[Hz]
 
-actual_passband_ripple = 0.1
-minimum_stopband_attenuation = 44
-passband_frequency = 500
-stopband_frequency = 750
-sampling_frequency = 2500
+actual_passband_ripple = 0.5
+minimum_stopband_attenuation = 35
+passband_frequency_low = 120
+passband_frequency_high = 180
+stopband_frequency_low = 60
+stopband_frequency_high = 240
+sampling_frequency = 600
 
-(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.LOW_PASS,
-	passband_frequency_low=passband_frequency,
-	passband_frequency_high=passband_frequency,
-	stopband_frequency_low=stopband_frequency,
-	stopband_frequency_high=stopband_frequency,
+transition_bandwidth = min(passband_frequency_low - stopband_frequency_low, passband_frequency_high - stopband_frequency_high)
+
+(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.BAND_PASS,
+	passband_frequency_low=passband_frequency_low,
+	passband_frequency_high=passband_frequency_high,
+	stopband_frequency_low=stopband_frequency_low,
+	stopband_frequency_high=stopband_frequency_high,
 	sampling_frequency=sampling_frequency,
 	specified_passband_ripple=actual_passband_ripple,
 	minimum_stopband_attenuation=minimum_stopband_attenuation)
@@ -59,11 +65,12 @@ sampling_frequency = 2500
 (kaiser_coeffs, alpha) = kaiser_coefficients(filter_order=filter_order,
 	actual_passband_ripple=actual_passband_ripple)
 
-impulse_response = kaiser_lowpass(passband_frequency_high=passband_frequency,
-	stopband_frequency_high=stopband_frequency,
+impulse_response = kaiser_bandpass(passband_frequency_low=passband_frequency_low,
+	passband_frequency_high = passband_frequency_high,
 	sampling_frequency=sampling_frequency,
+	transition_bandwidth=transition_bandwidth,
 	filter_order=filter_order,
-	kaiser_coeffs=kaiser_coeffs)
+	kaiser_coeffs=kaiser_coeffs)	
 
 maximum_frequency = sampling_frequency / 2
 frequencies = np.linspace(0, maximum_frequency, FREQUENCY_RESOLUTION)

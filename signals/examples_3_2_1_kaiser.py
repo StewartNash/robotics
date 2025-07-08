@@ -137,7 +137,7 @@ def kaiser_bandpass(FP1, FP2, BT, WK):
 	H = [(2 / FS) * (WC2 - WC1) * WK[0]]
 	for i in range(1, (NK - 1) / 2 + 1):
 		ARG = i * 2 * math.pi / FS
-		H.append(1 / (math.pi * i) * math.sin(WC2 * ARG) - math.sin(WC1 * ARG) * WK[i])
+		H.append(1 / (math.pi * i) * (math.sin(WC2 * ARG) - math.sin(WC1 * ARG)) * WK[i])
 		print("i = " + str(i) + " H(i) = " + str(H[i]))
 		
 	return H
