@@ -763,11 +763,19 @@ This chapter represents a brief review of signal processing before continuing in
 
 \section{IIR Digital Filter Design}
 
-An infinite impulse response (IIR) filter is characterized by an impulse response of infinite duration.
+An infinite impulse response (IIR) filter is characterized by an impulse response of infinite duration. We will discuss several methods of digital IIR filter design:
+\begin{itemize}
+	\item Bilinear transformation
+	\item Pole-zero placement
+	\item Complex coefficients
+	\item Computer aided design (CAD)
+\end{itemize}
+
+We will focus on bilinear transformation and treat the other methods only in passing. We will first discuss the bilinear transformation and then describe the filter design equations going from analog to digital filters.
 
 \subsection{Bilinear Transformation}
 
-One IIR digital filter (DF) design method is the bilinear transformation (BT) of classic analog filters. BT uniquely aps the entire left half of the $s$-plane into the interior of the unit circle in the $z$-plane. The design procedure is as follows:
+One IIR digital filter (DF) design method is the bilinear transformation (BT) of classic analog filters. BT uniquely maps the entire left half of the $s$-plane into the interior of the unit circle in the $z$-plane. The design procedure is as follows:
 \begin{enumerate}
 	\item Design formulas -- generate analog poles and zeros of Butterworth, Chebyshev, and elliptic lowpass filters
 	\item Frequency band transformation formulas -- converts analog lowpass filters into analog highpass, bandpass, and bandstop filters
@@ -775,6 +783,18 @@ One IIR digital filter (DF) design method is the bilinear transformation (BT) of
 \end{enumerate}
 
 For the linear network to be causal and stable (1) the transfer function should be a rational function of $s$ with real coefficients, (2) the poles of the analog filter must lie in the left half of the $s$-plane, and (3) the degree of the numerator (polynomial) must be less than or equal to the degree of the denominator (polynomial).
+
+\subsection{Design Equations}
+
+We refer to $\omega_p$ as the passband frequency and $\omega_s$ as the stopband frequency. In some texts, the passband frequency is called the cutoff frequency and denoted $\omega_0$. The transition band is between $\omega_p$ and $\omega_s$. Please note that the aforementioned frequencies can also be given as $f_p$ and $f_s$, respectively, where $omega=2{\pi}f$ is the angular frequency. 
+
+\subsubsection{Butterworth Filters}
+
+
+
+\subsubsection{Chebysheve Filters}
+
+\subsubsection{Elliptic Filters}
 
 \subsection{Pole-Zero Placement}
 

@@ -29,8 +29,8 @@ def magnitude_response(omega, impulse_response, sampling_frequency, filter_order
 		
 	return response_magnitude
 
-#FREQUENCY_RESOLUTION = 1
-FREQUENCY_RESOLUTION = 100
+#FREQUENCY_RESOLUTION = 100
+FREQUENCY_RESOLUTION = 500
 
 # Example 5.4
 # -----------
