@@ -47,7 +47,7 @@ passband_frequency = 500
 stopband_frequency = 750
 sampling_frequency = 2500
 
-(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.LOW_PASS,
+(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.LOWPASS,
 	passband_frequency_low=passband_frequency,
 	passband_frequency_high=passband_frequency,
 	stopband_frequency_low=stopband_frequency,
@@ -55,6 +55,8 @@ sampling_frequency = 2500
 	sampling_frequency=sampling_frequency,
 	specified_passband_ripple=actual_passband_ripple,
 	minimum_stopband_attenuation=minimum_stopband_attenuation)
+
+print("Filter order:", filter_order)
 	
 (kaiser_coeffs, alpha) = kaiser_coefficients(filter_order=filter_order,
 	actual_passband_ripple=actual_passband_ripple)
@@ -69,7 +71,7 @@ maximum_frequency = sampling_frequency / 2
 frequencies = np.linspace(0, maximum_frequency, FREQUENCY_RESOLUTION)
 angular_frequencies = frequencies * 2 * math.pi
 response_magnitude = [magnitude_response(w, impulse_response, sampling_frequency, filter_order) for w in angular_frequencies]
-response_magnitude = [20 * math.log10(m) for m in response_magnitude] 
+response_magnitude = [20 * math.log10(max(abs(m), 1e-10)) for m in response_magnitude]
 
 #print(frequencies)
 #print(response_magnitude)

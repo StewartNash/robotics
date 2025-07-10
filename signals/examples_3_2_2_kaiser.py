@@ -41,14 +41,10 @@ import enum
 # argument			ARG
 
 class FilterType(enum.Enum):
-	LOW_PASS = 1
-	HIGH_PASS = 2
-	BAND_PASS = 3
-	BAND_STOP = 4
-	LOWPASS = 5
-	HIGHPASS = 6
-	BANDPASS = 7
-	BANDSTOP = 8
+	LOWPASS = 1
+	HIGHPASS = 2
+	BANDPASS = 3
+	BANDSTOP = 4
 
 def kaiser_filter_order(filter_type,
 	passband_frequency_low,
@@ -60,12 +56,10 @@ def kaiser_filter_order(filter_type,
 	minimum_stopband_attenuation):
 	transition_bandwidth_low  = abs(passband_frequency_high - stopband_frequency_high)
 	transition_bandwidth_high = abs(passband_frequency_low - stopband_frequency_low)
-	if filter_type == FilterType.LOW_PASS or filter_type == FilterType.LOWPASS:
+	if filter_type == FilterType.LOWPASS:
 		transition_bandwidth = transition_bandwidth_low
-	if filter_type == FilterType.HIGH_PASS or filter_type == FilterType.HIGHPASS:
+	if filter_type == FilterType.HIGHPASS:
 		transition_bandwidth = transition_bandwidth_high
-	if filter_type == FilterType.BAND_PASS or filter_type == FilterType.BAND_STOP:
-		transition_bandwidth = min(transition_bandwidth_low, transition_bandwidth_high)
 	if filter_type == FilterType.BANDPASS or filter_type == FilterType.BANDSTOP:
 		transition_bandwidth = min(transition_bandwidth_low, transition_bandwidth_high)		
 	delta_stopband = 10 ** (-0.05 * minimum_stopband_attenuation)
@@ -129,7 +123,8 @@ def kaiser_lowpass(passband_frequency_high,
 	impulse_response = [initial_impulse_response * kaiser_coeffs[0]]
 	for i in range(1, int((nk - 1) / 2) + 1):
 		impulse_response.append(initial_impulse_response * sinc_function(cutoff_frequency, i) * kaiser_coeffs[i])
-	
+	impulse_response = impulse_response[::-1][1:] + impulse_response
+
 	return impulse_response
 
 def kaiser_highpass(passband_frequency_low,
@@ -144,6 +139,7 @@ def kaiser_highpass(passband_frequency_low,
 	impulse_response = [(1 + initial_impulse_response) * kaiser_coeffs[0]]
 	for i in range(1, int((nk - 1) / 2) + 1):
 		impulse_response.append(initial_impulse_response * sinc_function(cutoff_frequency, i) * kaiser_coeffs[i])
+	impulse_response = impulse_response[::-1][1:] + impulse_response
 	
 	return impulse_response
 	
@@ -160,8 +156,10 @@ def kaiser_bandpass(passband_frequency_low,
 	for i in range(1, int((nk - 1) / 2) + 1):
 		argument = i * 2.0 * math.pi / sampling_frequency
 		impulse_response.append(1.0 / (math.pi * i) * (math.sin(cutoff_frequency_high * argument) - math.sin(cutoff_frequency_low * argument)) * kaiser_coeffs[i])
-		print("i = " + str(i) + ", H(i) = " + str(impulse_response[i]))
-		
+	impulse_response = impulse_response[::-1][1:] + impulse_response
+	for i in range(1, len(impulse_response)):
+		print(f"i = {i}, H(i) = {impulse_response[i]:.6f}")
+	
 	return impulse_response
 
 def kaiser_bandstop(passband_frequency_low,
@@ -177,6 +175,7 @@ def kaiser_bandstop(passband_frequency_low,
 	for i in range(1, int((nk - 1) / 2) + 1):
 		argument = i * 2 * math.pi / sampling_frequency
 		impulse_response.append(1 / (math.pi * i) * (math.sin(cutoff_frequency_low * argument) - math.sin(cutoff_frequency_high * argument)) * kaiser_coeffs[i])
+	impulse_response = impulse_response[::-1][1:] + impulse_response
 		
 	return impulse_response
 

@@ -51,9 +51,11 @@ stopband_frequency_low = 60
 stopband_frequency_high = 240
 sampling_frequency = 600
 
-transition_bandwidth = min(passband_frequency_low - stopband_frequency_low, passband_frequency_high - stopband_frequency_high)
+transition_bandwidth_low = abs(passband_frequency_low - stopband_frequency_low)
+transition_bandwidth_high = abs(passband_frequency_high - stopband_frequency_high)
+transition_bandwidth = min(transition_bandwidth_low, transition_bandwidth_high)
 
-(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.BAND_PASS,
+(filter_order, delta, minimum_stopband_attenuation, parameter_d) = kaiser_filter_order(filter_type=FilterType.BANDPASS,
 	passband_frequency_low=passband_frequency_low,
 	passband_frequency_high=passband_frequency_high,
 	stopband_frequency_low=stopband_frequency_low,
@@ -61,7 +63,9 @@ transition_bandwidth = min(passband_frequency_low - stopband_frequency_low, pass
 	sampling_frequency=sampling_frequency,
 	specified_passband_ripple=actual_passband_ripple,
 	minimum_stopband_attenuation=minimum_stopband_attenuation)
-	
+
+print("Filter order:", filter_order)
+
 (kaiser_coeffs, alpha) = kaiser_coefficients(filter_order=filter_order,
 	actual_passband_ripple=actual_passband_ripple)
 
@@ -76,7 +80,7 @@ maximum_frequency = sampling_frequency / 2
 frequencies = np.linspace(0, maximum_frequency, FREQUENCY_RESOLUTION)
 angular_frequencies = frequencies * 2 * math.pi
 response_magnitude = [magnitude_response(w, impulse_response, sampling_frequency, filter_order) for w in angular_frequencies]
-response_magnitude = [20 * math.log10(m) for m in response_magnitude] 
+response_magnitude = [20 * math.log10(max(abs(m), 1e-10)) for m in response_magnitude]
 
 #print(frequencies)
 #print(response_magnitude)
@@ -84,6 +88,6 @@ response_magnitude = [20 * math.log10(m) for m in response_magnitude]
 plt.plot(frequencies, response_magnitude)
 plt.xlabel("Frequency (Hz)")
 plt.ylabel("Response (dB)")
-plt.title("Lowpass Filter Magnitude Response")
+plt.title("Bandpass Filter Magnitude Response")
 plt.show()
 
