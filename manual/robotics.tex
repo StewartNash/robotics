@@ -32,6 +32,32 @@
 
 \chapter{Dynamics}
 
+\section{Non-linear Dynamics}
+
+\subsection{Li\'enard System}
+A class of nonlinear oscillators comprise those with limit cycles. A stable limit cycle is an isolated periodic trajectory that is approached asymptotically ($t\rightarrow\infty$) by any other nearby trajectory. An unstable limit cycle is one that becomes stable under time reversal. (A trajectory is an integral curve in the phase manifold.) Limit cycles are only known to exist in non-linear dissipative systems.
+
+If $f$ is a continuously differentiable even function on $\mathbb{R}$ and $g$ is a continuously differentiable odd function on $\mathbb{R}$, a Li\'enard equation is one of the form
+\begin{equation}
+	\frac{d^2x}{dt^2}+f(x)\frac{dx}{dt}+g(x)=0
+\end{equation}	 
+
+The van der Pol oscillator is governed by a L\'ienard equation given by
+\begin{equation}
+	\frac{d^2x}{dt^2}-\mu(1-x^2)\frac{dx}{dt}+x=0
+\end{equation}
+It is often converted to a system of first-order equations (for example, during plotting in Python)
+\begin{align}
+	y&=\frac{dx}{dt}\\
+	\frac{dy}{dt}&=\mu(1-x^2)y-x
+\end{align}
+
+The phase plot is a graph of position versus velocity. The position is on the horizontal axis and the velocity is on the vertical axis. It shows the trajectory of the system's state $(x, v)$ over time. For the van der Pol oscillator, the phase plot typically shows a single, stable limit cycle. For the van der Pol oscillator, the parameter $\mu$ is the damping coefficient. In this case, the shape of the limit cycle is depends on the parameter $\mu$. At $\mu=0$, the system is a simple harmonic oscillator with a stable equilibrium point at the origin. As $\mu$ increases the equilibrium point becomes unstable, and a stable limit cycle emerges. For small $\mu$, the limit cycle is nearly elliptical, and as $\mu$ increases further, the limit cycle is increasingly akin to a square.
+
+A bifurcation diagram shows some asymptotic (long-term) value of a system as a function of a bifurcation parameter. The asymptotic value may be, for example, a fixed point, a periodic orbit, or a chaotic attractor. In discrete-time dynamical systems, the bifurcation diagram is called an orbit diagram.
+
+(A bifurcation diagram visualizes the change in a system's behavior as a parameter is varied. Bifurcation diagrams are useful for understanding how the oscillator's behavior changes under different driving conditions and for identifying transitions between different dynamical states. For the van der Pol oscillator, the bifurcation parameter is often $\mu$, the damping coefficient. The bifurcation diagram of a forced (external driving force) van der Pol oscillator can become more complex than that of a non-forced van der Pol oscillator. It may show transitions between periodic and chaotic behavior. It may also exhibit regions of synchronization with the external force, regions of quasiperiodicity, and regions where the stability of the periodic orbit is lost.)
+
 \section{Kinematics}
 
 Take a vector with components $\mathbf{P}=(a_x,b_y,c_z)$. A scale factor $w$ can be added (to the matrix form) to give
