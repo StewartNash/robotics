@@ -106,16 +106,65 @@ def compute_filter_order(parameter_A, parameter_K0, filter_family):
 	if filter_family == FilterFamily.BUTTERWORTH:
 		filter_order = math.ceil(math.log(parameter_A) / math.log(1 / parameter_K0))
 	elif filter_family == FilterFamily.CHEBYSHEV:
-		filter_order = math.acosh(parameter_A) / math.acosh(1 / parameter_K0)
+		filter_order = math.ceil(math.acosh(parameter_A) / math.acosh(1 / parameter_K0))
+	elif filter_family == FilterFamily.ELLIPTIC:
+		q0, q = elliptic_computations(parameter_K0)
+		filter_order = math.ceil(math.log(16 * A) / math.log(1 / q))
 	else:
 		filter_order = 0
 		
 	N = filter_order
 	return N
 	
-def elliptic_computations(parameter_K0):
-	pass
-
+def elliptic_computations(parameter_K0, filter_type):
+	if filter_type == FilterType.LOWPASS:
+		parameter_K = parameter_K0
+	elif filter_type == FilterType.HIGHPASS:
+		parameter_K = 1 / parameter_K0
+	elif filter_type == FilterType.BANDPASS:
+		parameter_K = parameter_K0
+	elif filter_type == FilterType.BANDSTOP:
+		parameter_K = parameter_K0
+	else:
+		parameter_K = parameter_K0
+	K = parameter_K
+	parameter_q0 = (1 - (1 - K ** 2)) ** 0.25 / (2 * (1 + (1 - K ** 2) ** 0.25))
+	q0 = parameter_q0	
+	parameter_q = q0 + 2 * qo ** 5 + 15 * q0 ** 9 + 150 * q0 ** 13
+	q = parameter_q
 	
+	return q0, q
+
+def elliptic_computations(parameter_K0, filter_type, fp1, fp2, fs1, fs2, F):
+	KA = math.tan(math.pi * fp2 / F) - math.tan(math.pi * fp1 / F)
+	KB = math.tan(math.pi * fp1 / F) * math.tan(math.pi * fp2 / F)
+	KC = math.tan(math.pi * fs1 / F) * math.tan(math.pi * fs2 / F)
+	K1 = (KA * math.tan(math.pi * fs1 / F)) / (KB - math.tan(math.pi * fs1 / F) ** 2)
+	K2 = (KA * math.tan(math.pi * fs2 / F)) / (math.tan(math.pi * fs2 / F) ** 2 - KB)
+	
+	if filter_type == FilterType.LOWPASS:
+		parameter_K = parameter_K0
+	elif filter_type == FilterType.HIGHPASS:
+		parameter_K = 1 / parameter_K0
+	elif filter_type == FilterType.BANDPASS:
+		if KC >= KB:
+			parameter_K = K1
+		else: # KC < KB
+			parameter_K = K2
+	elif filter_type == FilterType.BANDSTOP:
+		if KC >= KB:
+			parameter_K = 1 / K2
+		else: # KC < KB
+			parameter_K = 1 / K1
+	else:
+		parameter_K = parameter_K0
+
+	K = parameter_K
+	parameter_q0 = (1 - (1 - K ** 2)) ** 0.25 / (2 * (1 + (1 - K ** 2) ** 0.25))
+	q0 = parameter_q0	
+	parameter_q = q0 + 2 * qo ** 5 + 15 * q0 ** 9 + 150 * q0 ** 13
+	q = parameter_q
+	
+	return q0, q	
 
 
