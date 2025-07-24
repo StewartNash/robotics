@@ -84,11 +84,12 @@ class FilterType(enum.Enum):
 	BANDPASS = 3
 	BANDSTOP = 4
 	
-def lowpass_computations(maximum_passband_attenuation,
+def hplp_computations(maximum_passband_attenuation,
 	minimum_stopband_attenuation,
 	passband_edge_frequency,
 	stopband_edge_frequency,
 	sampling_frequency):
+	
 	Ap = maximum_passband_attenuation
 	As = minimum_stopband_attenuation
 	fp = passband_edge_frequency
@@ -100,71 +101,97 @@ def lowpass_computations(maximum_passband_attenuation,
 	parameter_A = parameter_lambda / parameter_epsilon
 	parameter_K0 = omega_p / omega_s
 	
-	return parameter_A, parameter_K0
+	return parameter_K0, parameter_A
 	
-def compute_filter_order(parameter_A, parameter_K0, filter_family):
-	if filter_family == FilterFamily.BUTTERWORTH:
-		filter_order = math.ceil(math.log(parameter_A) / math.log(1 / parameter_K0))
-	elif filter_family == FilterFamily.CHEBYSHEV:
-		filter_order = math.ceil(math.acosh(parameter_A) / math.acosh(1 / parameter_K0))
-	elif filter_family == FilterFamily.ELLIPTIC:
-		q0, q = elliptic_computations(parameter_K0)
-		filter_order = math.ceil(math.log(16 * A) / math.log(1 / q))
-	else:
-		filter_order = 0
-		
-	N = filter_order
-	return N
+def highpass_computations(maximum_passband_attenuation,
+	minimum_stopband_attenuation,
+	passband_edge_frequency,
+	stopband_edge_frequency,
+	sampling_frequency):
 	
-def elliptic_computations(parameter_K0, filter_type):
-	if filter_type == FilterType.LOWPASS:
-		parameter_K = parameter_K0
-	elif filter_type == FilterType.HIGHPASS:
-		parameter_K = 1 / parameter_K0
-	elif filter_type == FilterType.BANDPASS:
-		parameter_K = parameter_K0
-	elif filter_type == FilterType.BANDSTOP:
-		parameter_K = parameter_K0
-	else:
-		parameter_K = parameter_K0
+	parameter_K0, parameter_A = hplp_computations(maximum_passband_attenuation,
+	minimum_stopband_attenuation,
+	passband_edge_frequency,
+	stopband_edge_frequency,
+	sampling_frequency)
+	parameter_K = 1 / parameter_K0
+	
+	A = parameter_A
+	K0 = parameter_K0
 	K = parameter_K
-	parameter_q0 = (1 - (1 - K ** 2)) ** 0.25 / (2 * (1 + (1 - K ** 2) ** 0.25))
-	q0 = parameter_q0	
-	parameter_q = q0 + 2 * qo ** 5 + 15 * q0 ** 9 + 150 * q0 ** 13
-	q = parameter_q
 	
-	return q0, q
-
-def elliptic_computations(parameter_K0, filter_type, fp1, fp2, fs1, fs2, F):
+	return K, A
+	
+def lowpass_computations(maximum_passband_attenuation,
+	minimum_stopband_attenuation,
+	passband_edge_frequency,
+	stopband_edge_frequency,
+	sampling_frequency):
+	
+	parameter_K0, parameter_A = hplp_computations(maximum_passband_attenuation,
+	minimum_stopband_attenuation,
+	passband_edge_frequency,
+	stopband_edge_frequency,
+	sampling_frequency)
+	parameter_K = parameter_K0
+	
+	A = parameter_A
+	K0 = parameter_K0
+	K = parameter_K
+	
+	return K, A
+	
+def bpbs_computations(fp1, fp2, fs1, fs2, F):
 	KA = math.tan(math.pi * fp2 / F) - math.tan(math.pi * fp1 / F)
 	KB = math.tan(math.pi * fp1 / F) * math.tan(math.pi * fp2 / F)
 	KC = math.tan(math.pi * fs1 / F) * math.tan(math.pi * fs2 / F)
 	K1 = (KA * math.tan(math.pi * fs1 / F)) / (KB - math.tan(math.pi * fs1 / F) ** 2)
 	K2 = (KA * math.tan(math.pi * fs2 / F)) / (math.tan(math.pi * fs2 / F) ** 2 - KB)
 	
-	if filter_type == FilterType.LOWPASS:
-		parameter_K = parameter_K0
-	elif filter_type == FilterType.HIGHPASS:
-		parameter_K = 1 / parameter_K0
-	elif filter_type == FilterType.BANDPASS:
-		if KC >= KB:
-			parameter_K = K1
-		else: # KC < KB
-			parameter_K = K2
-	elif filter_type == FilterType.BANDSTOP:
-		if KC >= KB:
-			parameter_K = 1 / K2
-		else: # KC < KB
-			parameter_K = 1 / K1
-	else:
-		parameter_K = parameter_K0
+	return K1, K2, KA, KB, KC
+	
+def bandpass_computations(fp1, fp2, fs1, fs2, F):
+	K1, K2, KA, KB, KC = bpbs_computations(fp1, fp2, fs1, fs2, F)
 
+	if KC >= KB:
+		parameter_K = K1
+	else: # KC < KB
+		parameter_K = K2
+
+	K = parameter_K	
+	return K
+
+def bandstop_computations(fp1, fp2, fs1, fs2, F):
+	K1, K2, KA, KB, KC = bpbs_computations(fp1, fp2, fs1, fs2, F)
+
+	if KC >= KB:
+		parameter_K = 1 / K2
+	else: # KC < KB
+		parameter_K = 1 / K1
+	
+	K = parameter_K	
+	return K
+	
+def compute_filter_order(parameter_K, parameter_A, filter_family):
+	if filter_family == FilterFamily.BUTTERWORTH:
+		filter_order = math.ceil(math.log(parameter_A) / math.log(1 / parameter_K))
+	elif filter_family == FilterFamily.CHEBYSHEV:
+		filter_order = math.ceil(math.acosh(parameter_A) / math.acosh(1 / parameter_K))
+	elif filter_family == FilterFamily.ELLIPTIC:
+		q, q0 = elliptic_computations(parameter_K)
+		filter_order = math.ceil(math.log(16 * A) / math.log(1 / q))
+	else:
+		filter_order = 0
+		
+	N = filter_order
+	return N
+
+def elliptic_computations(parameter_K):
 	K = parameter_K
 	parameter_q0 = (1 - (1 - K ** 2)) ** 0.25 / (2 * (1 + (1 - K ** 2) ** 0.25))
 	q0 = parameter_q0	
 	parameter_q = q0 + 2 * qo ** 5 + 15 * q0 ** 9 + 150 * q0 ** 13
 	q = parameter_q
 	
-	return q0, q	
-
+	return q, q0	
 
