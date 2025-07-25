@@ -1,4 +1,5 @@
 from examples_3_1_1_iir import compute_filter_order, lowpass_computations, FilterType, FilterFamily
+from examples_3_1_1_iir import butterworth_analog_poles
 
 # Example 4.A.2
 # Chebyshev lowpass (order = 6)
@@ -30,6 +31,4 @@ filter_family = FilterFamily.BUTTERWORTH
 
 N = compute_filter_order(parameter_K, parameter_A, filter_family)
 
-print(K)
-print(A)
-print(N)
+print(butterworth_analog_poles(10))
