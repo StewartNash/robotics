@@ -1,5 +1,6 @@
 import math
 import enum
+from utility import complex_add, complex_subtract, complex_multiply, real_to_complex
 
 # filter_order			nk, NK
 # passband_frequency		fp
@@ -211,4 +212,51 @@ def butterworth_analog_poles(filter_order, passband_angular_frequency=0):
 		poles = [(s[0] * omega ** (- 1 / N), s[1] * omega ** (- 1 / N)) for s in poles]
 	
 	return poles
+
+#TODO: Replace this reference function
+def frequency_scaling_parameter(filter_family, fp, F, N=0, filter_type=FilterType.LOWPASS, fs=0, Ap=0):
+	alpha = 0
+
+	if filter_family is FilterFamily.BUTTERWORTH and filter_type is FilterType.LOWPASS:
+		alpha = (10 ** (0.1 * Ap) - 1) ** (-1 / (2 * N)) * math.tan(math.pi * fp / F)
+	if filter_family is FilterFamily.BUTTERWORTH and filter_type is FilterType.HIGHPASS:
+		alpha = (10 ** (0.1 * Ap) - 1) ** (1 / (2 * N)) * math.tan(math.pi * fp / F)
+	if filter_family is FilterFamily.CHEBYSHEV:
+		alpha = math.tan(math.pi * fp / F)
+	if filter_family is FilterFamily.ELLIPTIC:
+		alpha = (math.tan(math.pi * fp / f) * math.tan(math.pi * fs / F)) ** 0.5
+
+	assert alpha is not 0
+	
+	return alpha
+
+def butterworth_digital_poles(analog_poles, frequency_scaling_parameter):
+	alpha = frequency_scaling_parameter
+	digital_poles = [(0.0, 0.0)] * len(analog_poles)
+	for i in range(len(analog_poles)):
+		a = analog_poles[i][0] # Real component
+		b = analog_poles[i][1] # Imaginary component		
+		D = 1 + 2 * abs(a) * alpha + (a **2 + b ** 2) * alpha ** 2
+		c = (1 - (a ** 2 + b ** 2) * alpha ** 2) / D # Real component
+		d = (2 * b * alpha) / D # Imaginary component
+		digital_poles[i] = (c, d)
+		
+	return digital_poles
+	
+def iir_filter(samples, denominator_coefficients, numerator_coefficients):
+	x = real_to_complex(samples)
+	y = [(0.0, 0,0)] * len(x)
+	a = denominator_coefficients
+	b = numerator_coefficients
+	for i in range(len(x)):
+		accumulator = (0.0, 0.0)
+		for k in range(len(b)): # Feedforward
+			if i - k >= 0:
+				accumulator = complex_add(accumulator, complex_multiply(b[k], x[i - k]))
+		for k in range(1, len(a)): # Feedback
+			if i - k >= 0:
+				accumulator = complex_subtract(accumulator, complex_multiply(a[k], y[i - k]))
+		y[i] = accumulator
+		
+	return y
 
