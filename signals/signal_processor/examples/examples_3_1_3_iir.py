@@ -1,6 +1,6 @@
-from examples_3_1_1_iir import compute_filter_order, lowpass_computations, FilterType, FilterFamily
-from examples_3_1_1_iir import butterworth_analog_poles, butterworth_digital_poles, frequency_scaling_parameter, iir_filter
-from utility import polynomial_coefficients
+from .examples_3_1_1_iir import compute_filter_order, lowpass_computations, FilterType, FilterFamily
+from .examples_3_1_1_iir import butterworth_analog_poles, butterworth_digital_poles, frequency_scaling_parameter, iir_filter
+from signal_processor.utility import polynomial_coefficients
 import numpy as np
 
 # Example 4.A.2

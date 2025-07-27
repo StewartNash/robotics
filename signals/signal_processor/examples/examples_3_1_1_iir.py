@@ -1,6 +1,6 @@
 import math
 import enum
-from utility import complex_add, complex_subtract, complex_multiply, real_to_complex
+from signal_processor.utility import complex_add, complex_subtract, complex_multiply, real_to_complex
 
 # filter_order			nk, NK
 # passband_frequency		fp

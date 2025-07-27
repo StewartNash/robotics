@@ -1,4 +1,4 @@
-from examples_3_1_1_iir import compute_filter_order, lowpass_computations, FilterType, FilterFamily
+from .examples_3_1_1_iir import compute_filter_order, lowpass_computations, FilterType, FilterFamily
 
 # Example 4.A.1
 # Butterworth lowpass (order = 10)
