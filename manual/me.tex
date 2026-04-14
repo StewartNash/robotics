@@ -1,0 +1,139 @@
+\documentclass[11pt]{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\begin{document}
+
+\title{Intersectional Topics with Mechanical Engineering}
+\author{Stewart Nash}
+\date{2026}
+
+\maketitle
+
+\begin{abstract}
+
+Mechanical engineering shares many techniques with electrical engineering and signal processing. We will explore five of these techniques: (1) finite element analysis, (2) wavelet analysis, (3) nonlinear mathematics and nonlinear dynamics (including chaos), (4) optimal control and dynamics and (5) digital controls.
+
+This report will explore intersectional topics shared with mechanical engineering and ask how they can be leveraged to create breakthrough technologies. It will explore how these intersectional topics may be applied to robotics. The following intersectional topics will be covered.
+
+\begin{enumerate}
+	\item Wavelet and spectral analysis
+	\item Optimal control and dynamics
+		\begin{enumerate}
+			\item Lagrangian Dynamics
+			\item Hamiltonian Dynamics
+			\item Optimal Controls
+				\begin{enumerate}
+					\item Numerical methods
+				\end{enumerate}
+			\item Stochastic Controls
+		\end{enumerate}
+	\item Digital controls
+		\begin{enumerate}
+			\item Discrete-time systems
+			\item Linear quadratic control
+		\end{enumerate}
+	\item Nonlinear mathematics, nonlinear dynamics and chaos
+		\begin{enumerate}
+		 	\item Nonlinear mathematics
+		 		\begin{enumerate}
+					\item nonlinear transformations
+					\item nonlinear equations
+					\item nonlinear programming and optimization
+					\item nonlinear differential equations
+					\item nonlinear prediction theory
+				\end{enumerate}		
+			\item nonlinear dynamics
+			\item chaos
+		\end{enumerate}
+	\item Finite element analysis
+\end{enumerate}
+
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Spectral and Wavelet Analysis}
+
+Spectrum analysis, also referred to as spectral density estimation (SDE), seeks to estimate the (power) spectral density of a signal from a sequence of time samples of the signal. Wavelet analysis decomposes a signal into a representation in time–frequency space using a wavelet transform. Concerning spectral estimation, we will only cover multidimensional spectral analysis and the response of continuous linear systems to stationary random excitations. In mechanical engineering, both can be applied to vibration analysis whereas in signal processing these techniques are commonly leveraged in communications.\\
+A wavelet is a finite duration oscillation that is ostensibly ‘wave-like’. If a mother wavelet is given by
+\begin{equation}
+	\psi_{a,b}(t)
+\end{equation}
+with scale or dilation a and translation b, then the continuous wavelet transform of a signal x is given by
+\begin{equation}
+	x_a(t)=\int_\mathbb{R}{W_\psi{x}(a,b)\cdot\psi_{a,b}(t)\,db}
+\end{equation}
+with wavelet coefficients
+\begin{equation}
+	W_\psi{x}(a,b)=\langle{x,\psi_{a,b}}\rangle=\int_\mathbb{R}{x(t)\psi_{a,b}(t)\,dt}
+\end{equation}
+
+\chapter{Nonlinear Mathematics, Nonlinear Dynamics and Chaos}
+
+A nonlinear system is a system which is not linear. We shall first treat five areas of nonlinear mathematics: (1) nonlinear transformations, (2) nonlinear equations, (3) nonlinear programming and optimization, (4) nonlinear differential equations, (5) nonlinear prediction theory. We shall then foray into nonlinear dynamics and chaos.\\
+An example of a nonlinear dynamical system is the van der Pol oscillator which is described by the following differential equation
+\begin{equation}
+	\frac{d^2x}{dt^2}-\mu(1-x^2)\frac{dx}{dt}+x=0
+\end{equation}
+Finally, we may choose to explore nonlinear algebra. Nonlinear algebra generalizes the notions of spaces and transformations. which are found in linear algebra, in a nonlinear setting. Nonlinear algebra relies  heavily on algebraic geometry, or is at least closely related to it. Nonlinear algebra is usually conducted in the setting of the Zariski topology.
+
+\chapter{Optimal Control and Dynamics}
+
+Initially, we shall briefly report on both Lagrangian dynamics and Hamiltonian dynamics.\\
+Optimal control theory attempts to find a control law which minimizes a cost functional. For example, we seek to minimize the continuous-time cost functional
+\begin{equation}
+	J[\mathbf{x}(\cdot),\mathbf{u}(\cdot),t_0,t_f]{\equiv}E[\mathbf{x}(t_0),t_0,\mathbf{x}(t_f),t_f]+\int_{t_0}^{t_f}{F[\mathbf{x}(t),\mathbf{u}(t),t]\,dt}
+\end{equation}
+with state equation
+\begin{equation}
+	\dot{\mathbf{x}}(t)=\mathbf{f}[\mathbf{x}(t),\mathbf{u}(t),t]
+\end{equation}
+the path constraints
+\begin{equation}
+	\mathbf{h}[\mathbf{x}(t),\mathbf{u}(t),t]\leq\mathbf{0}
+\end{equation}
+and the endpoint conditions
+\begin{equation}
+	\mathbf{e}[\mathbf{x}(t_0),t_0,\mathbf{x}(t_f),t_f]=0
+\end{equation}
+where $x(t)$ is the state, $u(t)$ is the control and t is the independent variable, $t_0$ is the initial time and $t_f$ is the terminal time.\\
+Optimal control theory has broad applications, including in mechanical engineering. We shall report on  the basics of optimal controls in some detail using multiple examples and finally address stochastic control theory which concerns the application of dynamic programming techniques to stochastic differential equations. In this treatment, the Itô stochastic calculus will be applied to Hamilton-Jacobi-Bellman equation.\\
+Finally, we shall explore the employment of numerical methods to solve optimal controls.
+
+\chapter{Digital Controls}
+
+This section will treat the analysis of digital control systems, in which a digital computer is used within a closed-loop system. We will start with an introduction to discrete-time systems, the z-transform, sampling, reconstruction, and system time-response. In this introduction we shall see the application of these principles to open-loop and closed-loop systems. Finally, we shall look at pole placement, and linear quadratic optimal control. (Optionally, we may treat transformation of analog filters and digital filter structures.)
+
+\section{Sampling and Reconstruction}
+
+A signal, the error $\varepsilon$, is sampled by a zero-order hold to give
+\begin{equation}
+	\bar{\varepsilon}(t)=\sum_{k=0}^\infty{\varepsilon(kT)[u(t-kT)-u(t-(k+1)T)]}
+\end{equation}
+The Laplace transform of this sampled signal is
+\begin{align}
+	\bar{E}(s)&=\mathcal{L}\{\bar{\varepsilon}(t)\}\\
+	&=\left(\sum_{k=0}^\infty{\varepsilon(kT)e^{-kTs}}\right)\left(\frac{1-e^{-Ts}}{s}\right)
+\end{align}
+The two factors of this sampled signal can be divided into an ideal sampler (or impulse modulator)
+\begin{equation}
+	E^\ast(s)=\sum_{k=0}^\infty{\varepsilon(kT)e^{-kTs}}
+\end{equation}
+and the data hold
+\begin{equation}
+	\frac{1-e^{-Ts}}{s}
+\end{equation}
+The inverse Laplace transform of the ideal sampler is then
+\begin{equation}
+	\varepsilon^\ast(t)=\mathcal{L}^{-1}\{E^\ast(s)\}=\sum_{k=0}^\infty{\varepsilon(k)\delta(t-kT)}
+\end{equation}
+% Discuss the use of the inverse Laplace transform to yield the ideal sampler as an expression that uses either residues or the radian sampling frequency.
+
+\chapter{Finite Element Analysis}
+
+The finite element method (FEM) is a numerical method for solving differential equations. FEM is characterized by three steps and a final post-processing procedure: (1) variational formulation, (2) discretization, and (3) solution algorithm(s).
+
+\end{document}
