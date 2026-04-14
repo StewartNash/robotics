@@ -39,14 +39,19 @@ This report will explore intersectional topics shared with mechanical engineerin
 		\begin{enumerate}
 		 	\item Nonlinear mathematics
 		 		\begin{enumerate}
-					\item nonlinear transformations
-					\item nonlinear equations
-					\item nonlinear programming and optimization
-					\item nonlinear differential equations
+					\item Linear programming
+					\item Nonlinear programming
+					\item Differential equations
+						\begin{enumerate}
+							\item Pendulum
+							\item Van der pol oscillator
+							\item Ricatti equation
+						\end{enumerate}
+					\item Perturbation method
 					\item nonlinear prediction theory
 				\end{enumerate}		
-			\item nonlinear dynamics
-			\item chaos
+			\item Nonlinear dynamics
+			\item Chaos
 		\end{enumerate}
 	\item Finite element analysis
 \end{enumerate}
@@ -55,9 +60,12 @@ This report will explore intersectional topics shared with mechanical engineerin
 
 \tableofcontents
 
-\chapter{Spectral and Wavelet Analysis}
+\chapter{Spectral Analysis}
 
-Spectrum analysis, also referred to as spectral density estimation (SDE), seeks to estimate the (power) spectral density of a signal from a sequence of time samples of the signal. Wavelet analysis decomposes a signal into a representation in time–frequency space using a wavelet transform. Concerning spectral estimation, we will only cover multidimensional spectral analysis and the response of continuous linear systems to stationary random excitations. In mechanical engineering, both can be applied to vibration analysis whereas in signal processing these techniques are commonly leveraged in communications.\\
+Spectrum analysis, also referred to as spectral density estimation (SDE), seeks to estimate the (power) spectral density of a signal from a sequence of time samples of the signal. Wavelet analysis decomposes a signal into a representation in time–frequency space using a wavelet transform. Concerning spectral estimation, we will only cover multidimensional spectral analysis and the response of continuous linear systems to stationary random excitations. In mechanical engineering, both can be applied to vibration analysis whereas in signal processing these techniques are commonly leveraged in communications.
+
+\chapter{Wavelet Analysis}
+
 A wavelet is a finite duration oscillation that is ostensibly ‘wave-like’. If a mother wavelet is given by
 \begin{equation}
 	\psi_{a,b}(t)
@@ -71,18 +79,51 @@ with wavelet coefficients
 	W_\psi{x}(a,b)=\langle{x,\psi_{a,b}}\rangle=\int_\mathbb{R}{x(t)\psi_{a,b}(t)\,dt}
 \end{equation}
 
-\chapter{Nonlinear Mathematics, Nonlinear Dynamics and Chaos}
+\chapter{Dynamics}
 
-A nonlinear system is a system which is not linear. We shall first treat five areas of nonlinear mathematics: (1) nonlinear transformations, (2) nonlinear equations, (3) nonlinear programming and optimization, (4) nonlinear differential equations, (5) nonlinear prediction theory. We shall then foray into nonlinear dynamics and chaos.\\
-An example of a nonlinear dynamical system is the van der Pol oscillator which is described by the following differential equation
+Initially, we shall briefly report on both Lagrangian dynamics and Hamiltonian dynamics.
+
+
+\section{Lagrangian Dynamics}
+
+The Lagrangian is given by
 \begin{equation}
-	\frac{d^2x}{dt^2}-\mu(1-x^2)\frac{dx}{dt}+x=0
+	L=T-V
 \end{equation}
-Finally, we may choose to explore nonlinear algebra. Nonlinear algebra generalizes the notions of spaces and transformations. which are found in linear algebra, in a nonlinear setting. Nonlinear algebra relies  heavily on algebraic geometry, or is at least closely related to it. Nonlinear algebra is usually conducted in the setting of the Zariski topology.
+where $T$ is the kinetic energy of the system and $V$ is the potential energy of the system.\\
+The equations of motion are then
+\begin{equation}
+	\frac{d}{dt}\frac{\partial L}{\partial\dot{q}^\alpha}-\frac{\partial L}{\partial q^\alpha}=0
+\end{equation}
 
-\chapter{Optimal Control and Dynamics}
+\section{Hamiltonian Dynamics}
 
-Initially, we shall briefly report on both Lagrangian dynamics and Hamiltonian dynamics.\\
+The Hamiltonian is given by
+\begin{equation}
+	H=T+V
+\end{equation}
+The equations of motion are given by the Hamilton's canonical equations
+\begin{equation}
+	\begin{cases}
+		&\dot{q}^\beta=\frac{\partial H}{\partial p_\beta}\\
+		&\dot{p}^\beta=-\frac{\partial H}{\partial q^\beta}
+	\end{cases}
+\end{equation}
+
+\chapter{Optimal Control}
+
+A control problem occurs when the state of a system evolves according to
+\begin{equation}
+	Y'(t)=G(t,Y(t),U(t))
+\end{equation}
+with control function $U$. In optimal control we wish to find those controls $U$ which produce states $Y$ which optimize a performance criterion given by
+\begin{equation}
+	F(Y,U)=\int_a^b{f(t,Y(t),U(t))\,dt}
+\end{equation}
+The problem is \emph{autonomous} when both the state function $G$ and the performance function $f$ do not depend explicitly on $t$.
+
+\section{Introduction}
+
 Optimal control theory attempts to find a control law which minimizes a cost functional. For example, we seek to minimize the continuous-time cost functional
 \begin{equation}
 	J[\mathbf{x}(\cdot),\mathbf{u}(\cdot),t_0,t_f]{\equiv}E[\mathbf{x}(t_0),t_0,\mathbf{x}(t_f),t_f]+\int_{t_0}^{t_f}{F[\mathbf{x}(t),\mathbf{u}(t),t]\,dt}
@@ -102,6 +143,42 @@ and the endpoint conditions
 where $x(t)$ is the state, $u(t)$ is the control and t is the independent variable, $t_0$ is the initial time and $t_f$ is the terminal time.\\
 Optimal control theory has broad applications, including in mechanical engineering. We shall report on  the basics of optimal controls in some detail using multiple examples and finally address stochastic control theory which concerns the application of dynamic programming techniques to stochastic differential equations. In this treatment, the Itô stochastic calculus will be applied to Hamilton-Jacobi-Bellman equation.\\
 Finally, we shall explore the employment of numerical methods to solve optimal controls.
+
+\chapter{Nonlinear Mathematics, Nonlinear Dynamics and Chaos}
+
+A nonlinear system is a system which is not linear. We shall first treat five areas of nonlinear mathematics: (1) nonlinear transformations, (2) nonlinear equations, (3) nonlinear programming and optimization, (4) nonlinear differential equations, (5) nonlinear prediction theory. We shall then foray into nonlinear dynamics and chaos.\\
+Finally, we may choose to explore nonlinear algebra. Nonlinear algebra generalizes the notions of spaces and transformations. which are found in linear algebra, in a nonlinear setting. Nonlinear algebra relies  heavily on algebraic geometry, or is at least closely related to it. Nonlinear algebra is usually conducted in the setting of the Zariski topology.
+
+\section{Linear Programming}
+
+The simplex process is an algorithm for solving linear-programming problems.
+
+\section{Nonlinear Programming}
+
+The non-linear programming problem is concerned with the maximization or minimization of a continuous and differentiable function of $n$ as the general programming problem. We therefore use the symbol $(G)$ to refer to this problem.
+
+\section{Differential Equations}
+
+\subsection{Pendulum}
+
+The pendulum is described by a nonlinear differential equation.
+
+\subsection{Van der Pol Equation}
+
+An example of a nonlinear dynamical system is the van der Pol oscillator which is described by the following differential equation
+\begin{equation}
+	\frac{d^2x}{dt^2}-\mu(1-x^2)\frac{dx}{dt}+x=0
+\end{equation}
+
+The van der Pol equation can be derived by starting with an electrical circuit.
+
+\subsection{Riccati Equation}
+
+The Riccati equation is a first-order differential equation that arises in the setting of optimal control.
+
+\section{Perturbation Method}
+
+A perturbation method is a method for finding an approximate solution to a problem by starting with a known solution of a simpler problem.
 
 \chapter{Digital Controls}
 
